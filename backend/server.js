@@ -6,6 +6,21 @@ import cookieParser from "cookie-parser";
 import fs from "node:fs";
 import errorHandler from "./src/helpers/errorhandler.js";
 
+function useRoutes(routeDir, app) {
+  const routeFiles = fs.readdirSync(routeDir);
+
+  routeFiles.forEach((file) => {
+    // use dynamic import
+    import(`${routeDir}/${file}`)
+      .then((route) => {
+        app.use("/api/debug", route.default);
+      })
+      .catch((err) => {
+        console.log("Failed to load route file", err);
+      });
+  });
+}
+
 function initServer() {
   dotenv.config();
   const port = process.env.PORT || 8000;
@@ -18,6 +33,7 @@ function initServer() {
   app.use(cookieParser());
   // error handler middleware
   app.use(errorHandler);
+  useRoutes("./src/routes", app);
 
   return async () => {
     try {
