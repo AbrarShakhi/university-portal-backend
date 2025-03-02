@@ -9,8 +9,7 @@ export class Test {
       const result = await pool.query(query);
       return result.rows;
     } catch (error) {
-      console.error("Failed to fetch test", error);
-      throw error;
+      return undefined;
     }
   }
 
@@ -18,19 +17,19 @@ export class Test {
     try {
       return await pool.query("INSERT INTO test(name) VALUES($1);", [name]);
     } catch (error) {
-      console.error(`Failed to insert test name: ${name}`, error);
+      return undefined;
     }
   }
 
   static async DeleteTest(id) {
     try {
-      if (id) {
+      if (id !== "all") {
         return await pool.query("DELETE FROM TEST WHERE id = $1;", [id]);
       } else {
         return await pool.query("DELETE FROM TABLE;");
       }
     } catch (error) {
-      console.error(`Failed to delete id: ${id}`, error);
+      return undefined;
     }
   }
 }

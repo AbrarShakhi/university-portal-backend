@@ -12,9 +12,14 @@ const config = {
   port: process.env.DB_PORT,
 };
 
-// console.log(config);
-
-const pool = new Pool(config);
+let pool = undefined;
+try {
+  pool = new Pool(config);
+} catch (error) {
+  console.log("Failed create Postgres pool", error);
+  console.log("Database config:", config);
+  throw error;
+}
 
 export async function connect() {
   try {
