@@ -89,7 +89,7 @@
           "color": ""
         },
         "meta": {
-          "updateAt": 1741412903589,
+          "updateAt": 1741428173129,
           "createAt": 1741412607853
         }
       },
@@ -126,7 +126,7 @@
         "tableId": "i13L7TnyF7coudCiRClrA",
         "name": "id",
         "comment": "",
-        "dataType": "CHAR(13)",
+        "dataType": "char(13)",
         "default": "",
         "options": 14,
         "ui": {
@@ -137,7 +137,7 @@
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1741412685327,
+          "updateAt": 1741428187072,
           "createAt": 1741412623400
         }
       },
@@ -146,18 +146,18 @@
         "tableId": "i13L7TnyF7coudCiRClrA",
         "name": "first_name",
         "comment": "",
-        "dataType": "VARCHAR(128)",
+        "dataType": "varchar(128)",
         "default": "",
         "options": 8,
         "ui": {
           "keys": 0,
           "widthName": 60,
           "widthComment": 60,
-          "widthDataType": 81,
+          "widthDataType": 67,
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1741412717001,
+          "updateAt": 1741428200537,
           "createAt": 1741412664766
         }
       },
@@ -166,18 +166,18 @@
         "tableId": "i13L7TnyF7coudCiRClrA",
         "name": "last_name",
         "comment": "",
-        "dataType": "VARCHAR(128)",
+        "dataType": "varchar(128)",
         "default": "",
         "options": 0,
         "ui": {
           "keys": 0,
           "widthName": 60,
           "widthComment": 60,
-          "widthDataType": 81,
+          "widthDataType": 67,
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1741412735400,
+          "updateAt": 1741428215090,
           "createAt": 1741412722378
         }
       },
@@ -186,18 +186,18 @@
         "tableId": "i13L7TnyF7coudCiRClrA",
         "name": "mobile_no",
         "comment": "",
-        "dataType": "VARCHAR(15)",
+        "dataType": "varchar(15)",
         "default": "",
         "options": 12,
         "ui": {
           "keys": 0,
           "widthName": 60,
           "widthComment": 60,
-          "widthDataType": 74,
+          "widthDataType": 60,
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1741412771777,
+          "updateAt": 1741428218655,
           "createAt": 1741412741441
         }
       },
@@ -206,18 +206,18 @@
         "tableId": "i13L7TnyF7coudCiRClrA",
         "name": "email",
         "comment": "",
-        "dataType": "VARCHAR(128)",
+        "dataType": "varchar(128)",
         "default": "",
         "options": 12,
         "ui": {
           "keys": 0,
           "widthName": 60,
           "widthComment": 60,
-          "widthDataType": 81,
+          "widthDataType": 67,
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1741412788058,
+          "updateAt": 1741428217184,
           "createAt": 1741412774184
         }
       },
@@ -226,18 +226,18 @@
         "tableId": "WDtmXNK2VQKczS8kDlIIe",
         "name": "password",
         "comment": "",
-        "dataType": "VARCHAR(512)",
+        "dataType": "varchar(512)",
         "default": "",
         "options": 0,
         "ui": {
           "keys": 0,
           "widthName": 60,
           "widthComment": 60,
-          "widthDataType": 81,
+          "widthDataType": 67,
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1741412853667,
+          "updateAt": 1741428223898,
           "createAt": 1741412819336
         }
       },
@@ -286,7 +286,7 @@
         "tableId": "WDtmXNK2VQKczS8kDlIIe",
         "name": "id",
         "comment": "",
-        "dataType": "CHAR(13)",
+        "dataType": "char(13)",
         "default": "",
         "options": 10,
         "ui": {
@@ -297,7 +297,7 @@
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1741412940984,
+          "updateAt": 1741428187072,
           "createAt": 1741412933162
         }
       }
@@ -341,7 +341,7 @@
           "columnIds": [
             "9yxWeqX_Jb94edy486yoW"
           ],
-          "x": 347,
+          "x": 333,
           "y": 130,
           "direction": 2
         },
@@ -384,7 +384,7 @@
       1741412607851,
       -1,
       {
-        "name": 1741412619927
+        "name": 1741428173128
       }
     ],
     "9yxWeqX_Jb94edy486yoW": [
@@ -392,8 +392,8 @@
       1741412623399,
       -1,
       {
-        "name": 1741412629102,
-        "dataType": 1741412685327,
+        "name": 1741428179647,
+        "dataType": 1741428187072,
         "options(unique)": 1741412646291,
         "options(notNull)": 1741412652108,
         "options(primaryKey)": 1741412656813
@@ -405,7 +405,7 @@
       -1,
       {
         "name": 1741412674225,
-        "dataType": 1741412717001,
+        "dataType": 1741428200536,
         "options(notNull)": 1741412697396
       }
     ],
@@ -415,7 +415,7 @@
       -1,
       {
         "name": 1741412735399,
-        "dataType": 1741412728594,
+        "dataType": 1741428215089,
         "options(notNull)": 1741412725139,
         "options(unique)": 1741412725139
       }
@@ -426,7 +426,7 @@
       -1,
       {
         "name": 1741412750397,
-        "dataType": 1741412768806,
+        "dataType": 1741428218655,
         "options(notNull)": 1741412770680,
         "options(unique)": 1741412771776
       }
@@ -437,7 +437,7 @@
       -1,
       {
         "name": 1741412775882,
-        "dataType": 1741412783357,
+        "dataType": 1741428217183,
         "options(unique)": 1741412785729,
         "options(notNull)": 1741412788057
       }
@@ -456,7 +456,7 @@
       -1,
       {
         "name": 1741412826004,
-        "dataType": 1741412853667
+        "dataType": 1741428223897
       }
     ],
     "X80ZJZ6nGr8hPl06TREMC": [
@@ -495,7 +495,7 @@
       {
         "options(notNull)": 1741412933160,
         "name": 1741412933160,
-        "dataType": 1741412933160,
+        "dataType": 1741428187072,
         "default": 1741412933160,
         "comment": 1741412933160,
         "options(primaryKey)": 1741412940983

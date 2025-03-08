@@ -6,6 +6,6 @@ export const stdLoginCtrl = asyncHandler(async (req, res) => {
   if (rows) {
     res.status(200).json(rows);
   } else {
-    res.status(404).json({ message: "rows not found" });
+    res.status(404).json({ message: "Unable to get data" });
   }
 });
