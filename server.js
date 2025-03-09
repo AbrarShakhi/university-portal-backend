@@ -6,6 +6,8 @@ import cookieParser from "cookie-parser";
 import fs from "node:fs";
 import errorHandler from "./src/helpers/errorhandler.js";
 
+subRoute = "/api/debug";
+
 function useRoutes(routeDir, app) {
   const routeFiles = fs.readdirSync(routeDir);
 
@@ -13,7 +15,7 @@ function useRoutes(routeDir, app) {
     // use dynamic import
     import(`${routeDir}/${file}`)
       .then((route) => {
-        app.use("/api/debug", route.default);
+        app.use(subRoute, route.default);
       })
       .catch((err) => {
         console.log("Failed to load route file", err);
@@ -23,7 +25,7 @@ function useRoutes(routeDir, app) {
 
 function initServer() {
   dotenv.config();
-  const port = process.env.PORT || 8000;
+  const port = process.env.SERVER_PORT || 8000;
   const app = express();
 
   // middleware
