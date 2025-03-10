@@ -1,9 +1,13 @@
 import express from "express";
 
-import { stdLoginCtrl } from "../controllers/auth/studentController.js";
+import { StudentLoginHandler } from "../controllers/auth/studentController.js";
 
 const router = express.Router();
 
-router.get("/login", stdLoginCtrl);
+/**
+ * @requires { id: "****-*-**-***", password: "*******" }
+ * @response
+ */
+router.post("/login", StudentLoginHandler);
 
 export default router;
