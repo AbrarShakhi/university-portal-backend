@@ -6,7 +6,7 @@ import cookieParser from "cookie-parser";
 import fs from "node:fs";
 import errorHandler from "./src/helpers/errorhandler.js";
 
-subRoute = "/api/debug";
+const subRoute = "/api/debug";
 
 function useRoutes(routeDir, app) {
   const routeFiles = fs.readdirSync(routeDir);
