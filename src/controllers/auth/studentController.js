@@ -1,4 +1,3 @@
-import asyncHandler from "express-async-handler";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import crypto from "node:crypto";
@@ -6,7 +5,7 @@ import crypto from "node:crypto";
 import { generateToken } from "../../helpers/tokenManager.js";
 import { StudentLogin } from "../../models/auth/studentLogin.js";
 
-export const studentActivateHandler = asyncHandler(async (req, res) => {
+export async function studentActivateHandler(req, res) {
   const { id, password } = req.body;
 
   // validation
@@ -59,9 +58,9 @@ export const studentActivateHandler = asyncHandler(async (req, res) => {
   res.status(201).json({
     id,
   });
-});
+}
 
-export const studentLoginHandler = asyncHandler(async (req, res) => {
+export async function studentLoginHandler(req, res) {
   // get id and password from req.body
   const { id, password } = req.body;
 
@@ -114,9 +113,9 @@ export const studentLoginHandler = asyncHandler(async (req, res) => {
   } else {
     res.status(400).json({ message: "Invalid email or password" });
   }
-});
+}
 
-export const logoutHandler = asyncHandler(async (req, res) => {
+export async function logoutHandler(req, res) {
   res.clearCookie("token", {
     httpOnly: true,
     sameSite: "none",
@@ -124,5 +123,5 @@ export const logoutHandler = asyncHandler(async (req, res) => {
     path: "/",
   });
 
-  res.status(200).json({ message: "User logged out" });
-});
+  return res.status(200).json({ message: "User logged out" });
+}
