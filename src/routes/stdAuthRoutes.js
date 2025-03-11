@@ -1,6 +1,10 @@
 import express from "express";
 
-import { StudentLoginHandler } from "../controllers/auth/studentController.js";
+import {
+  studentLoginHandler,
+  logoutHandler,
+  studentActivateHandler,
+} from "../controllers/auth/studentController.js";
 
 const router = express.Router();
 
@@ -8,6 +12,16 @@ const router = express.Router();
  * @requires { id: "****-*-**-***", password: "*******" }
  * @response
  */
-router.post("/login", StudentLoginHandler);
+router.post("/login", studentLoginHandler);
 
+/**
+ * @requires None
+ * @response Cookie
+ */
+router.get("/logout", logoutHandler);
+
+/**
+ *
+ */
+router.post("/activate", studentActivateHandler);
 export default router;

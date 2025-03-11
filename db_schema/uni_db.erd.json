@@ -7,10 +7,10 @@
     "scrollTop": 0,
     "scrollLeft": 0,
     "zoomLevel": 1,
-    "show": 484,
+    "show": 508,
     "database": 16,
     "databaseName": "uni_db",
-    "canvasType": "ERD",
+    "canvasType": "@dineug/erd-editor/builtin-schema-sql",
     "language": 1,
     "tableNameCase": 4,
     "columnNameCase": 2,
@@ -99,23 +99,25 @@
         "comment": "",
         "columnIds": [
           "vgkKNt5HiTDKJDsDwUUrz",
-          "-GiBarMv9Q_SLdd4uq1Oy"
+          "-GiBarMv9Q_SLdd4uq1Oy",
+          "IanOgXosLX2VYwrDEYqCX"
         ],
         "seqColumnIds": [
           "vgkKNt5HiTDKJDsDwUUrz",
           "X80ZJZ6nGr8hPl06TREMC",
-          "-GiBarMv9Q_SLdd4uq1Oy"
+          "-GiBarMv9Q_SLdd4uq1Oy",
+          "IanOgXosLX2VYwrDEYqCX"
         ],
         "ui": {
-          "x": 511,
-          "y": 68,
+          "x": 491,
+          "y": 7,
           "zIndex": 68,
           "widthName": 76,
           "widthComment": 60,
           "color": ""
         },
         "meta": {
-          "updateAt": 1741412943726,
+          "updateAt": 1741591289299,
           "createAt": 1741412806999
         }
       }
@@ -300,6 +302,26 @@
           "updateAt": 1741428187072,
           "createAt": 1741412933162
         }
+      },
+      "IanOgXosLX2VYwrDEYqCX": {
+        "id": "IanOgXosLX2VYwrDEYqCX",
+        "tableId": "WDtmXNK2VQKczS8kDlIIe",
+        "name": "is_active",
+        "comment": "",
+        "dataType": "boolean",
+        "default": "FALSE",
+        "options": 8,
+        "ui": {
+          "keys": 0,
+          "widthName": 60,
+          "widthComment": 60,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1741591478524,
+          "createAt": 1741591053946
+        }
       }
     },
     "relationshipEntities": {
@@ -341,7 +363,7 @@
           "columnIds": [
             "9yxWeqX_Jb94edy486yoW"
           ],
-          "x": 333,
+          "x": 424,
           "y": 130,
           "direction": 2
         },
@@ -350,8 +372,8 @@
           "columnIds": [
             "-GiBarMv9Q_SLdd4uq1Oy"
           ],
-          "x": 511,
-          "y": 120,
+          "x": 491,
+          "y": 71,
           "direction": 1
         },
         "meta": {
@@ -506,6 +528,18 @@
       1741412933160,
       -1,
       {}
+    ],
+    "IanOgXosLX2VYwrDEYqCX": [
+      "tableColumnEntities",
+      1741591053941,
+      -1,
+      {
+        "name": 1741591478523,
+        "dataType": 1741591066211,
+        "options(notNull)": 1741591168997,
+        "options(autoIncrement)": 1741591184035,
+        "default": 1741591273835
+      }
     ]
   }
 }
