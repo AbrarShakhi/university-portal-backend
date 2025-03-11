@@ -15,8 +15,9 @@ CREATE TABLE student
 
 CREATE TABLE student_login
 (
-  password varchar(512),
-  id       char(13)     NOT NULL,
+  password  varchar(512),
+  id        char(13)     NOT NULL,
+  is_active boolean      NOT NULL DEFAULT FALSE,
   PRIMARY KEY (id)
 );
 
