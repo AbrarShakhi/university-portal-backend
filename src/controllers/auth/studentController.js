@@ -3,9 +3,10 @@ import jwt from "jsonwebtoken";
 import crypto from "node:crypto";
 
 import { generateToken } from "../../helpers/tokenManager.js";
-import { StudentLogin } from "../../models/auth/studentLogin.js";
+import Student from "../../models/querys/student.js";
+import StudentLogin from "../../models/querys/studentLogin.js";
 
-export async function studentActivateHandler(req, res) {
+export async function activate(req, res) {
   const { id, password } = req.body;
 
   // validation
@@ -60,7 +61,7 @@ export async function studentActivateHandler(req, res) {
   });
 }
 
-export async function studentLoginHandler(req, res) {
+export async function login(req, res) {
   // get id and password from req.body
   const { id, password } = req.body;
 
@@ -73,12 +74,12 @@ export async function studentLoginHandler(req, res) {
   // check if student exists
   const stdExists = await StudentLogin.findById(id);
   if (!stdExists) {
-    return res.status(404).json({ message: "Student ID not found" });
+    return res.status(404).json({ message: "Invalid student ID" });
   }
 
   if (!stdExists.is_active) {
     return res
-      .status(400)
+      .status(401)
       .json({ message: "Your ID is not active yet. Active it first." });
   }
 
@@ -86,36 +87,33 @@ export async function studentLoginHandler(req, res) {
   const isMatch = await bcrypt.compare(password, stdExists.password);
 
   if (!isMatch) {
-    // 400 Bad Request
-    return res.status(400).json({ message: "Invalid credentials" });
+    return res.status(401).json({ message: "Invalid password" });
   }
 
   // generate token with Student id
   const token = generateToken(id);
 
-  if (stdExists && isMatch) {
-    const { id, is_active } = stdExists;
+  const { first_name, last_name, email } = await Student.findById(id);
 
-    // set the token in the cookie
-    res.cookie("token", token, {
-      path: "/",
-      httpOnly: true,
-      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-      sameSite: "none", // cross-site access --> allow all third-party cookies
-      secure: true,
-    });
+  // set the token in the cookie
+  res.cookie("token", token, {
+    path: "/",
+    httpOnly: true,
+    maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+    sameSite: "none", // cross-site access --> allow all third-party cookies
+    secure: true,
+  });
 
-    // send back the Student and token in the response to the client
-    res.status(200).json({
-      id,
-      is_active,
-    });
-  } else {
-    res.status(400).json({ message: "Invalid email or password" });
-  }
+  // send back the Student and token in the response to the client
+  res.status(200).json({
+    first_name,
+    last_name,
+    email,
+    token,
+  });
 }
 
-export async function logoutHandler(req, res) {
+export async function logout(req, res) {
   res.clearCookie("token", {
     httpOnly: true,
     sameSite: "none",
@@ -123,5 +121,5 @@ export async function logoutHandler(req, res) {
     path: "/",
   });
 
-  return res.status(200).json({ message: "User logged out" });
+  return res.status(200).json({ message: "Logged out" });
 }
