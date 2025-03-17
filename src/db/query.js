@@ -1,4 +1,4 @@
-import pool from "../../db/connect.js";
+import pool from "./connect.js";
 
 export default async function query(query_string, args) {
   try {
