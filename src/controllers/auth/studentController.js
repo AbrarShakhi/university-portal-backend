@@ -6,61 +6,6 @@ import { generateToken, verifyToken } from "../../helpers/tokenManager.js";
 import Student from "../../models/querys/student.js";
 import StudentLogin from "../../models/querys/studentLogin.js";
 
-export async function activateStudent(req, res) {
-  const { id, password } = req.body;
-
-  // validation
-  if (!id || !password) {
-    // 400 Bad Request
-    return res.status(400).json({ message: "All fields are required" });
-  }
-
-  // check password length
-  if (password.length < 6) {
-    return res
-      .status(400)
-      .json({ message: "Password must be at least 6 characters" });
-  }
-
-  // check if Student id not found
-  const stdExists = await StudentLogin.findById(id);
-
-  if (!stdExists) {
-    return res.status(404).json({ message: "Student ID not found" });
-  }
-
-  /**
-   * @todo: Need to do verify with phone
-   */
-
-  // Update with hashed password
-  const db_result = await StudentLogin.updateById(id, {
-    password,
-    is_active: true,
-  });
-
-  if (!db_result) {
-    return res.status(400).json({ message: "Unable to active account" });
-  }
-
-  // generate token with user id
-  const token = generateToken(id);
-
-  // set the token in the cookie
-  res.cookie("token", token, {
-    path: "/",
-    httpOnly: true,
-    maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-    sameSite: "none", // cross-site access --> allow all third-party cookies
-    secure: true,
-  });
-
-  // 201 Created
-  res.status(201).json({
-    id,
-  });
-}
-
 export async function loginStudent(req, res) {
   // get id and password from req.body
   const { id, password } = req.body;
@@ -131,4 +76,3 @@ export async function loginStatusStudent(req, res) {
     return res.status(401).json(false);
   }
 }
-

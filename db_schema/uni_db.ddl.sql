@@ -1,8 +1,5 @@
--- DROP TABLE student_login CASCADE;
--- DROP TABLE student CASCADE;
 DROP SCHEMA public CASCADE;
 CREATE SCHEMA public;
-
 
 CREATE TABLE advisor
 (
@@ -56,21 +53,21 @@ CREATE TABLE section
 (
   section_no int         NOT NULL,
   course_id  char(6)     NOT NULL,
-  sem_Id     varchar(16) NOT NULL,
   room_no    varchar(7)  NOT NULL,
   capacity   int        ,
   day        varchar(5)  NOT NULL,
   start_time time        NOT NULL,
   end_time   time        NOT NULL,
-  PRIMARY KEY (section_no, course_id, sem_Id)
+  year       char(4)     NOT NULL,
+  season     varchar(16) NOT NULL,
+  PRIMARY KEY (section_no, course_id, year, season)
 );
 
 CREATE TABLE semester
 (
-  sem_Id varchar(16) NOT NULL,
   year   char(4)     NOT NULL,
-  name   varchar(16) NOT NULL,
-  PRIMARY KEY (sem_Id)
+  season varchar(16) NOT NULL,
+  PRIMARY KEY (year, season)
 );
 
 CREATE TABLE student
@@ -95,12 +92,13 @@ CREATE TABLE student_login
 CREATE TABLE takes
 (
   id         char(13)    NOT NULL,
-  section_no int         NOT NULL,
-  course_id  char(6)     NOT NULL,
-  sem_Id     varchar(16) NOT NULL,
   grade      numeric    ,
   is_dropped boolean    ,
-  PRIMARY KEY (id, section_no, course_id, sem_Id)
+  section_no int         NOT NULL,
+  course_id  char(6)     NOT NULL,
+  year       char(4)     NOT NULL,
+  season     varchar(16) NOT NULL,
+  PRIMARY KEY (id, section_no, course_id, year, season)
 );
 
 CREATE TABLE teaches
@@ -108,8 +106,9 @@ CREATE TABLE teaches
   faculty_short_id varchar(10) NOT NULL,
   section_no       int         NOT NULL,
   course_id        char(6)     NOT NULL,
-  sem_Id           varchar(16) NOT NULL,
-  PRIMARY KEY (faculty_short_id, section_no, course_id, sem_Id)
+  year             char(4)     NOT NULL,
+  season           varchar(16) NOT NULL,
+  PRIMARY KEY (faculty_short_id, section_no, course_id, year, season)
 );
 
 CREATE TABLE timeslot
@@ -171,11 +170,6 @@ ALTER TABLE section
     REFERENCES room (room_no);
 
 ALTER TABLE section
-  ADD CONSTRAINT FK_semester_TO_section
-    FOREIGN KEY (sem_Id)
-    REFERENCES semester (sem_Id);
-
-ALTER TABLE section
   ADD CONSTRAINT FK_timeslot_TO_section
     FOREIGN KEY (day, start_time, end_time)
     REFERENCES timeslot (day, start_time, end_time);
@@ -185,17 +179,23 @@ ALTER TABLE takes
     FOREIGN KEY (id)
     REFERENCES student (id);
 
-ALTER TABLE takes
-  ADD CONSTRAINT FK_section_TO_takes
-    FOREIGN KEY (section_no, course_id, sem_Id)
-    REFERENCES section (section_no, course_id, sem_Id);
-
 ALTER TABLE teaches
   ADD CONSTRAINT FK_faculty_TO_teaches
     FOREIGN KEY (faculty_short_id)
     REFERENCES faculty (faculty_short_id);
 
+ALTER TABLE section
+  ADD CONSTRAINT FK_semester_TO_section
+    FOREIGN KEY (year, season)
+    REFERENCES semester (year, season);
+
+ALTER TABLE takes
+  ADD CONSTRAINT FK_section_TO_takes
+    FOREIGN KEY (section_no, course_id, year, season)
+    REFERENCES section (section_no, course_id, year, season);
+
 ALTER TABLE teaches
   ADD CONSTRAINT FK_section_TO_teaches
-    FOREIGN KEY (section_no, course_id, sem_Id)
-    REFERENCES section (section_no, course_id, sem_Id);
+    FOREIGN KEY (section_no, course_id, year, season)
+    REFERENCES section (section_no, course_id, year, season);
+
