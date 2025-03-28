@@ -16,3 +16,4 @@ router.post("/activate", asyncHandler(activateStudent));
 router.get("/login-status", asyncHandler(loginStatusStudent));
 
 export default router;
+
