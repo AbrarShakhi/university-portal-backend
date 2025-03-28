@@ -1,4 +1,4 @@
-import query from "../../helpers/query.js";
+import query from "../../db/query.js";
 
 export default class Student {
   static async findById(id) {

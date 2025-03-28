@@ -2,11 +2,11 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import crypto from "node:crypto";
 
-import { generateToken } from "../../helpers/tokenManager.js";
+import { generateToken, verifyToken } from "../../helpers/tokenManager.js";
 import Student from "../../models/querys/student.js";
 import StudentLogin from "../../models/querys/studentLogin.js";
 
-export async function activate(req, res) {
+export async function activateStudent(req, res) {
   const { id, password } = req.body;
 
   // validation
@@ -61,7 +61,7 @@ export async function activate(req, res) {
   });
 }
 
-export async function login(req, res) {
+export async function loginStudent(req, res) {
   // get id and password from req.body
   const { id, password } = req.body;
 
@@ -113,7 +113,7 @@ export async function login(req, res) {
   });
 }
 
-export async function logout(req, res) {
+export async function logoutStudent(req, res) {
   res.clearCookie("token", {
     httpOnly: true,
     sameSite: "none",
@@ -123,3 +123,12 @@ export async function logout(req, res) {
 
   return res.status(200).json({ message: "Logged out" });
 }
+
+export async function loginStatusStudent(req, res) {
+  if (verifyToken(req.cookies.token)) {
+    return res.status(200).json(true);
+  } else {
+    return res.status(401).json(false);
+  }
+}
+
