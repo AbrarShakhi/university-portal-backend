@@ -1,6 +1,7 @@
 DROP SCHEMA public CASCADE;
 CREATE SCHEMA public;
 
+
 CREATE TABLE advisor
 (
   id               char(13)    NOT NULL,
@@ -83,9 +84,19 @@ CREATE TABLE student
 
 CREATE TABLE student_login
 (
-  password  varchar(512),
-  id        char(13)     NOT NULL,
-  is_active boolean      NOT NULL DEFAULT FALSE,
+  password     varchar(512) DEFAULT 123456789,
+  id           char(13)     NOT NULL,
+  is_active    boolean      NOT NULL DEFAULT FALSE,
+  is_dismissed boolean      NOT NULL DEFAULT FALSE,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE student_token
+(
+  created_date date     NOT NULL,
+  expired_date date     NOT NULL,
+  id           char(13) NOT NULL,
+  token        varchar(512) ,
   PRIMARY KEY (id)
 );
 
@@ -199,3 +210,7 @@ ALTER TABLE teaches
     FOREIGN KEY (section_no, course_id, year, season)
     REFERENCES section (section_no, course_id, year, season);
 
+ALTER TABLE student_token
+  ADD CONSTRAINT FK_student_login_TO_student_token
+    FOREIGN KEY (id)
+    REFERENCES student_login (id);

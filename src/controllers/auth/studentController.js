@@ -1,6 +1,4 @@
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import crypto from "node:crypto";
 
 import { generateToken, verifyToken } from "../../helpers/tokenManager.js";
 import Student from "../../models/querys/student.js";
@@ -21,11 +19,13 @@ export async function loginStudent(req, res) {
   if (!stdExists) {
     return res.status(404).json({ message: "Invalid student ID" });
   }
-
   if (!stdExists.is_active) {
     return res
       .status(401)
       .json({ message: "Your ID is not active yet. Active it first." });
+  }
+  if (stdExists.is_dismissed) {
+    return res.status(401).json({ message: "Your ID is dismissed!" });
   }
 
   // check if the password matches the hashed password in the database
@@ -53,6 +53,7 @@ export async function loginStudent(req, res) {
   res.status(200).json({
     first_name,
     last_name,
+    id,
     email,
     token,
   });
