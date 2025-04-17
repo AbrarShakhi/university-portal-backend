@@ -78,10 +78,13 @@ export const sendOtpStudent = asyncHandler(async (req, res) => {
   }
 
   let email_subject = "";
+  let template = "";
   if (reason === "to_active") {
     email_subject = "OTP for Student ID Activation";
+    template = "activeAccount";
   } else if (reason === "to_reset_password") {
     email_subject = "OTP for Student ID Password Reset";
+    template = "resetPassword";
   } else {
     return res.status(400).json({
       message:
@@ -127,12 +130,11 @@ export const sendOtpStudent = asyncHandler(async (req, res) => {
 
   const details = {
     subject: email_subject,
-    send_to: std.email,
-    send_from: process.env.APP_EMAIL,
-    reply_to: process.env.USER_EMAIL,
-    template: "otp",
+    send_to: std.email, // user email
+    reply_to: "noreply@gmail.com", // noreply email
+    template: template,
     name: std.first_name + " " + std.last_name,
-    link: otp,
+    token: opt,
   };
 
   const info = await sendEmail(details);

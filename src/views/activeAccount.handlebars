@@ -1,0 +1,53 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Verify Your Email</title>
+    <style>
+      * {
+        text-decoration: none;
+      }
+      .container {
+        margin: 0 auto;
+        max-width: 500px;
+        width: 100%;
+      }
+      .code {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff !important;
+        text-decoration: none;
+        border-radius: 5px;
+      }
+      img {
+        width: 30px;
+        border-radius: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <img src="https://avatars.githubusercontent.com/u/114344002?v=4" alt="portal logo" />
+      <h2 class="color-primary">{{subject}}</h2>
+      <hr />
+      <p>Hello
+        {{name}},
+      </p>
+      <p>Please use the code below to verify your account.<br /></p>
+
+      <p class="code">
+        {{token}}
+      </p>
+
+      <p style="margin-bottom: 50px;">
+        If you didn't create an account, you can ignore this email.
+      </p>
+
+      <hr />
+      <p>Regards,</p>
+      <p><b>X university portal</b></p>
+    </div>
+  </body>
+</html>

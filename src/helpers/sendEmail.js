@@ -12,20 +12,20 @@ const __dirname = path.dirname(__filename);
 const sendEmail = async ({
   subject,
   send_to,
-  send_from,
   reply_to,
   template,
   name,
-  link,
+  token,
 }) => {
   const transporter = nodeMailer.createTransport({
-    service: "Outlook365",
-    host: "smtp.office365.com",
+    // personal gmail
+    service: "gmail",
+    host: "smtp.gmail.com",
     port: 587,
     secure: false,
     auth: {
-      user: process.env.USER_EMAIL, //Your Outlook email
-      pass: process.env.EMAIL_PASS, //Your Outlook password
+      user: process.env.APP_EMAIL, // email
+      pass: process.env.EMAIL_PASS, // password
     },
   });
 
@@ -42,14 +42,14 @@ const sendEmail = async ({
   transporter.use("compile", hbs(handlebarsOptions));
 
   const mailOptions = {
-    from: send_from,
+    from: process.env.APP_EMAIL,
     to: send_to,
     replyTo: reply_to,
     subject: subject,
     template: template,
     context: {
       name: name,
-      link: link,
+      token: token,
     },
   };
 
