@@ -1,4 +1,4 @@
-import query from "../../db/query.js";
+import sql from "../../db/sql.js";
 
 export default class studentDashboard {
   static async getClassSchedule(id, semester_year, semester_season) {
@@ -22,7 +22,7 @@ export default class studentDashboard {
       "  takes.id = $1" +
       "      AND section.year = $2" +
       "      AND section.season = $3";
-    const result = await query(sql, [id, semester_year, semester_season]);
+    const result = await sql(sql, [id, semester_year, semester_season]);
 
     if (result && result.rows) {
       return result.rows;

@@ -1,8 +1,8 @@
-import query from "../../db/query.js";
+import sql from "../../db/sql.js";
 
 export default class Student {
   static async findById(id) {
-    const result = await query("SELECT * FROM student WHERE id = $1", [id]);
+    const result = await sql("SELECT * FROM student WHERE id = $1", [id]);
 
     if (result && result.rows.length == 1) {
       return result.rows[0];

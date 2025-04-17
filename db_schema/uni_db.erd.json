@@ -4,13 +4,13 @@
   "settings": {
     "width": 2000,
     "height": 2000,
-    "scrollTop": -34.0278,
+    "scrollTop": -206.2499,
     "scrollLeft": 0,
     "zoomLevel": 0.85,
     "show": 492,
     "database": 16,
     "databaseName": "uni_db",
-    "canvasType": "ERD",
+    "canvasType": "@dineug/erd-editor/builtin-schema-sql",
     "language": 1,
     "tableNameCase": 4,
     "columnNameCase": 2,
@@ -2262,18 +2262,18 @@
         "tableId": "tR5MXQUfbGt49Vko5jxrh",
         "name": "created_date",
         "comment": "",
-        "dataType": "date",
+        "dataType": "timestamp",
         "default": "",
         "options": 8,
         "ui": {
           "keys": 0,
           "widthName": 76,
           "widthComment": 60,
-          "widthDataType": 60,
+          "widthDataType": 61,
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1743524327339,
+          "updateAt": 1744915015807,
           "createAt": 1743524277844
         }
       },
@@ -2282,18 +2282,18 @@
         "tableId": "tR5MXQUfbGt49Vko5jxrh",
         "name": "expired_date",
         "comment": "",
-        "dataType": "date",
+        "dataType": "timestamp",
         "default": "",
         "options": 8,
         "ui": {
           "keys": 0,
           "widthName": 75,
           "widthComment": 60,
-          "widthDataType": 60,
+          "widthDataType": 61,
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1743524344460,
+          "updateAt": 1744915018190,
           "createAt": 1743524329745
         }
       },
@@ -4088,7 +4088,7 @@
       -1,
       {
         "name": 1743524300734,
-        "dataType": 1743524323150,
+        "dataType": 1744915015806,
         "options(notNull)": 1743524327337
       }
     ],
@@ -4098,7 +4098,7 @@
       -1,
       {
         "name": 1743524339649,
-        "dataType": 1743524342709,
+        "dataType": 1744915018189,
         "options(notNull)": 1743524344459
       }
     ],

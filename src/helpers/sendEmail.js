@@ -9,7 +9,7 @@ dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const sendEmail = async (
+const sendEmail = async ({
   subject,
   send_to,
   send_from,
@@ -17,7 +17,7 @@ const sendEmail = async (
   template,
   name,
   link,
-) => {
+}) => {
   const transporter = nodeMailer.createTransport({
     service: "Outlook365",
     host: "smtp.office365.com",
@@ -55,11 +55,9 @@ const sendEmail = async (
 
   try {
     const info = await transporter.sendMail(mailOptions);
-    console.log("Message sent: %s", info.messageId);
     return info;
   } catch (error) {
-    console.log("Error sending email: ", error);
-    throw error;
+    return undefined;
   }
 };
 

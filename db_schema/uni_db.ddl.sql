@@ -93,10 +93,10 @@ CREATE TABLE student_login
 
 CREATE TABLE student_token
 (
-  created_date date     NOT NULL,
-  expired_date date     NOT NULL,
-  id           char(13) NOT NULL,
-  token        varchar(512) ,
+  created_date timestamp    NOT NULL,
+  expired_date timestamp    NOT NULL,
+  id           char(13)     NOT NULL,
+  token        varchar(512),
   PRIMARY KEY (id)
 );
 
