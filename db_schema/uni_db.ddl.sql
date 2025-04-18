@@ -85,7 +85,7 @@ CREATE TABLE student
 
 CREATE TABLE student_login
 (
-  password varchar(512) DEFAULT 123456789,
+  password varchar(512),
   id       char(13)     NOT NULL,
   PRIMARY KEY (id)
 );
