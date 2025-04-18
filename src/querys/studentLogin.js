@@ -49,7 +49,7 @@ export default class StudentLogin {
     return false;
   }
 
-  static async updateOpt(id, otp) {
+  static async updateOtp(id, otp) {
     const result = sql(
       `UPDATE student_token 
               SET created_date = NOW(), expired_date = NOW() + INTERVAL '5 minutes', token = $2 

@@ -5,7 +5,7 @@ import { generateToken, verifyToken } from "../../helpers/tokenManager.js";
 import Student from "../../querys/student.js";
 import StudentLogin from "../../querys/studentLogin.js";
 import sendEmail from "../../helpers/sendEmail.js";
-import generateOtp from "../../helpers/optGenerater.js";
+import { generateOtp, validateOtp } from "../../helpers/otps.js";
 
 const cookie_options = {
   path: "/",
@@ -83,10 +83,10 @@ export const sendOtpStudent = asyncHandler(async (req, res) => {
   let template = "";
 
   if (reason === "to_active") {
-    email_subject = "OTP for Student ID Activation";
+    email_subject = "Activate your Student Accout";
     template = "activeAccount";
   } else if (reason === "to_reset_password") {
-    email_subject = "OTP for Student ID Password Reset";
+    email_subject = "OTP for Student Password Reset";
     template = "resetPassword";
   } else {
     return res.status(400).json({
@@ -147,7 +147,7 @@ export const sendOtpStudent = asyncHandler(async (req, res) => {
     reply_to: "noreply@gmail.com", // noreply email
     template: template,
     name: std[0].first_name + " " + std[0].last_name,
-    token: opt,
+    token: otp,
   };
 
   const info = await sendEmail(details);
@@ -162,4 +162,42 @@ export const sendOtpStudent = asyncHandler(async (req, res) => {
   }
 
   return res.status(200).json({ message: "OTP sent successfully" });
+});
+
+export const activateAccount = asyncHandler(async (req, res) => {
+  const { id, otp } = req.body;
+
+  if (!id || !otp) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+
+  const std = await Student.findById(id);
+  if (!std || std.length < 1) {
+    return res.status(404).json({ message: "Invalid student ID" });
+  }
+  if (std[0].is_dismissed) {
+    return res.status(401).json({ message: "Your ID is dismissed!" });
+  }
+  const stdLogin = await StudentLogin.findById(id);
+  if (stdLogin && stdLogin.length > 0) {
+    return res.status(401).json({
+      message: "Your ID is already active. No need to active it again.",
+    });
+  }
+  const storedOtp = await StudentLogin.findTokenById(id);
+  if (!storedOtp || storedOtp.length < 1) {
+    return res.status(401).json({ message: "Invalid OTP" });
+  }
+  const { otpStat, err_msg } = validateOtp(storedOtp[0], otp);
+  if (otpStat === true) {
+    // Active the account
+    // that meaas insert the student to student_login table
+    // delete the otp from student_login table
+    // return success message
+  }
+  // OTP is invalid
+  // increment the try_count
+  // if try_count >= 3, delete the otp from student_login table
+  // return error message
+  return res.status(401).json({ message: err_msg });
 });

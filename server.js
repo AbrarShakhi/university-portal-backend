@@ -6,7 +6,7 @@ import cookieParser from "cookie-parser";
 import fs from "node:fs";
 import errorHandler from "./src/helpers/errorhandler.js";
 
-const subRoute = "/api/debug";
+const subRoute = "/api/v1";
 
 function useRoutes(routeDir, app) {
   const routeFiles = fs.readdirSync(routeDir);
@@ -45,7 +45,7 @@ function initServer() {
         console.log(`Server is running on port ${port}`);
       });
     } catch (error) {
-      console.log("Failed to start server.....", error.message);
+      console.log("Failed to start server database.....", error.message);
       process.exit(1);
     }
   };

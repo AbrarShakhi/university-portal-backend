@@ -32,16 +32,16 @@ INSERT INTO faculty (faculty_short_id, first_name, last_name, dept_short_name) V
 -- STUDENT (revised ID format)
 INSERT INTO student (id, first_name, last_name, mobile_no, email, dept_short_name) VALUES
 ('2023-1-01-001', 'Alice', 'Johnson', '+8801711111111', 'alice@univ.edu', 'CSE'),
-('2023-1-02-002', 'Bob', 'Williams', '+8801722222222', 'bob@univ.edu', 'EEE'),
-('2023-1-03-003', 'Charlie', 'Brown', '+8801733333333', 'charlie@univ.edu', 'PHY'),
-('2023-1-04-004', 'David', 'Miller', '+8801744444444', 'david@univ.edu', 'MAT');
+('2022-3-60-111', 'Tasfia Binte', 'Jahangir', '+8801722222222', '2022-3-60-111@std.ewubd.edu', 'EEE'),
+('2022-3-60-243', 'Wasimul Bari', 'Rahat', '+8801733333333', '2022-3-60-243@std.ewubd.edu', 'PHY'),
+('2022-3-60-020', 'Fahim', 'Shahriar', '+8801744444444', '2022-3-60-020@std.ewubd.edu', 'MAT');
 
 -- ADVISOR (updated references)
 INSERT INTO advisor (id, faculty_short_id) VALUES
 ('2023-1-01-001', 'JS_CSE'),
-('2023-1-02-002', 'SJ_EEE'),
-('2023-1-03-003', 'RW_PHY'),
-('2023-1-04-004', 'EB_MAT');
+('2022-3-60-111', 'SJ_EEE'),
+('2022-3-60-243', 'RW_PHY'),
+('2022-3-60-020', 'EB_MAT');
 
 -- ROOM (unchanged)
 INSERT INTO room (room_no, building) VALUES
@@ -86,9 +86,9 @@ INSERT INTO section (section_no, course_id, room_no, capacity, day, start_time, 
 -- TAKES (updated IDs)
 INSERT INTO takes (id, grade, is_dropped, section_no, course_id, year, season) VALUES
 ('2023-1-01-001', 3.5, FALSE, 1, 'CSE101', '2023', 'Spring'),
-('2023-1-02-002', 3.7, FALSE, 2, 'EEE201', '2023', 'Spring'),
-('2023-1-03-003', 3.2, FALSE, 1, 'PHY301', '2023', 'Fall'),
-('2023-1-04-004', 4.0, FALSE, 1, 'MAT401', '2024', 'Spring');
+('2022-3-60-111', 3.7, FALSE, 2, 'EEE201', '2023', 'Spring'),
+('2022-3-60-243', 3.2, FALSE, 1, 'PHY301', '2023', 'Fall'),
+('2022-3-60-020', 4.0, FALSE, 1, 'MAT401', '2024', 'Spring');
 
 -- TEACHES (updated faculty references)
 INSERT INTO teaches (faculty_short_id, section_no, course_id, year, season) VALUES
