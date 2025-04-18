@@ -79,15 +79,14 @@ CREATE TABLE student
   mobile_no       varchar(15)  NOT NULL UNIQUE,
   email           varchar(128) NOT NULL UNIQUE,
   dept_short_name varchar(6)   NOT NULL,
+  is_dismissed    boolean      NOT NULL DEFAULT false,
   PRIMARY KEY (id)
 );
 
 CREATE TABLE student_login
 (
-  password     varchar(512) DEFAULT 123456789,
-  id           char(13)     NOT NULL,
-  is_active    boolean      NOT NULL DEFAULT FALSE,
-  is_dismissed boolean      NOT NULL DEFAULT FALSE,
+  password varchar(512) DEFAULT 123456789,
+  id       char(13)     NOT NULL,
   PRIMARY KEY (id)
 );
 
@@ -97,6 +96,7 @@ CREATE TABLE student_token
   expired_date timestamp    NOT NULL,
   id           char(13)     NOT NULL,
   token        varchar(512),
+  try_count    int          NOT NULL DEFAULT 0,
   PRIMARY KEY (id)
 );
 

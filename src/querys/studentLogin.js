@@ -6,8 +6,8 @@ export default class StudentLogin {
   static async findById(id) {
     const result = await sql("SELECT * FROM student_login WHERE id = $1", [id]);
 
-    if (result && result.rows.length == 1) {
-      return result.rows[0];
+    if (result && result.rows) {
+      return result.rows;
     } else {
       return undefined;
     }
@@ -29,11 +29,7 @@ export default class StudentLogin {
   static async findTokenById(id) {
     const result = await sql("SELECT * FROM student_token WHERE id = $1", [id]);
 
-    if (!result) {
-      return undefined;
-    } else if (result.rows.length == 1) {
-      return result.rows;
-    } else if (result.rows.length == 0) {
+    if (result && result.rows) {
       return result.rows;
     }
     return undefined;

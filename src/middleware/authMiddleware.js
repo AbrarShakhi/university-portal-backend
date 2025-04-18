@@ -7,16 +7,19 @@ export async function protect(req, res, next) {
     const { id } = req.body;
     const stat = verifyToken(req.cookies.token);
 
-    const stdLogin = await StudentLogin.findById(id);
-    if (!stdLogin) {
+    const stdExists = await Student.findById(id);
+    if (!stdExists && stdExists.length < 1) {
       return res.status(404).json({ message: "Invalid student ID" });
     }
-    if (!stdLogin.is_active) {
+
+    const stdLogin = await StudentLogin.findById(id);
+    if (!stdLogin || stdLogin.length < 1) {
       return res
         .status(401)
         .json({ message: "Your ID is not active yet. Active it first." });
     }
-    if (stdLogin.is_dismissed) {
+
+    if (stdExists[0].is_dismissed) {
       return res.status(401).json({ message: "Your ID is dismissed!" });
     }
 
@@ -24,14 +27,7 @@ export async function protect(req, res, next) {
       return res.status(401).json({ message: "Not authorized, please login!" });
     }
 
-    const std = await Student.findById(id);
-    // check if std exists
-    if (!std) {
-      return res.status(404).json({ message: "Student not found!" });
-    }
-
-    // set student details in the request object
-    req.std = std;
+    req.std = stdExists[0];
     next();
   } catch (error) {
     return res.status(401).json({ message: "Not authorized, token failed!" });

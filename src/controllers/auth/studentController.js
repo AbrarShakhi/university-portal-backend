@@ -22,20 +22,21 @@ export const loginStudent = asyncHandler(async (req, res) => {
     return res.status(400).json({ message: "All fields are required" });
   }
 
-  const stdExists = await StudentLogin.findById(id);
-  if (!stdExists) {
+  const stdExists = await Student.findById(id);
+  if (!stdExists || stdExists.length < 1) {
     return res.status(404).json({ message: "Invalid student ID" });
   }
-  if (!stdExists.is_active) {
+  const stdLogin = await StudentLogin.findById(id);
+  if (!stdLogin || stdLogin.length < 1) {
     return res
       .status(401)
       .json({ message: "Your ID is not active yet. Active it first." });
   }
-  if (stdExists.is_dismissed) {
+  if (stdExists[0].is_dismissed) {
     return res.status(401).json({ message: "Your ID is dismissed!" });
   }
 
-  const isMatch = await bcrypt.compare(password, stdExists.password);
+  const isMatch = await bcrypt.compare(password, stdExists[0].password);
 
   if (!isMatch) {
     return res.status(401).json({ message: "Invalid password" });
@@ -43,7 +44,7 @@ export const loginStudent = asyncHandler(async (req, res) => {
 
   const token = generateToken(id);
 
-  const { first_name, last_name, email } = await Student.findById(id);
+  const { first_name, last_name, email } = stdExists[0];
 
   res.cookie("token", token, cookie_options);
 
@@ -79,6 +80,7 @@ export const sendOtpStudent = asyncHandler(async (req, res) => {
 
   let email_subject = "";
   let template = "";
+
   if (reason === "to_active") {
     email_subject = "OTP for Student ID Activation";
     template = "activeAccount";
@@ -87,20 +89,29 @@ export const sendOtpStudent = asyncHandler(async (req, res) => {
     template = "resetPassword";
   } else {
     return res.status(400).json({
-      message:
-        "Invalid reason. Possible reasons are: to_active or to_reset_password",
+      message: "Invalid reason",
     });
   }
 
-  const stdLogin = await StudentLogin.findById(id);
   const std = await Student.findById(id);
-  if (!stdLogin || !std) {
+  const stdLogin = await StudentLogin.findById(id);
+
+  if (!std || std.length < 1 || !stdLogin) {
     return res.status(404).json({ message: "Invalid student ID" });
   }
-  if (reason === "to_active" && stdLogin.is_active) {
+
+  if (reason === "to_active" && stdLogin.length > 0) {
     return res.status(401).json({
       message: "Your ID is already active. No need to active it again.",
     });
+  }
+  if (reason === "to_reset_password" && stdLogin.length < 1) {
+    return res
+      .status(401)
+      .json({ message: "Your ID is not active yet. Active it first." });
+  }
+  if (std[0].is_dismissed) {
+    return res.status(401).json({ message: "Your ID is dismissed!" });
   }
 
   let otp = generateOtp();
@@ -116,24 +127,25 @@ export const sendOtpStudent = asyncHandler(async (req, res) => {
       return res.status(500).json({ message: "Unable to send OTP" });
     }
   } else {
-    resOtpTok = resOtpTok[0];
-    const expired_date = new Date(resOtpTok.expired_date);
-    if (new Date() > expired_date) {
+    if (
+      new Date() > new Date(resOtpTok[0].expired_date) ||
+      resOtpTok[0].try_count >= 3
+    ) {
       const result = await StudentLogin.updateOtp(id, otp);
       if (!result) {
         return res.status(500).json({ message: "Unable to send OTP" });
       }
     } else {
-      otp = resOtpTok.token;
+      otp = resOtpTok[0].token;
     }
   }
 
   const details = {
     subject: email_subject,
-    send_to: std.email, // user email
+    send_to: std[0].email, // user email
     reply_to: "noreply@gmail.com", // noreply email
     template: template,
-    name: std.first_name + " " + std.last_name,
+    name: std[0].first_name + " " + std[0].last_name,
     token: opt,
   };
 
@@ -144,7 +156,7 @@ export const sendOtpStudent = asyncHandler(async (req, res) => {
 
   if (info.accepted.length > 0) {
     return res.status(200).json({
-      message: `OTP sent successfully to ${std.email}`,
+      message: `OTP sent successfully to ${std[0].email}`,
     });
   }
 

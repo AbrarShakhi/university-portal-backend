@@ -23,14 +23,16 @@ export async function changePasswordStudent(req, res) {
     return res.status(400).json({ message: passRes });
   }
 
-  //find user by id
-  const std = await StudentLogin.findById(req.std.id);
-  if (!std) {
-    return res.status(404).json({ message: "Student not found!" });
+  //find old password by id
+  const stdLogin = await StudentLogin.findById(req.std.id);
+  if (!stdLogin || stdLogin.length < 1) {
+    return res.status(404).json({ message: "Account is Not Active." });
   }
 
+  const { old_password } = stdLogin[0].password;
+
   // compare current password with the hashed password in the database
-  const isMatch = await bcrypt.compare(currentPassword, std.password);
+  const isMatch = await bcrypt.compare(currentPassword, old_password);
 
   if (!isMatch) {
     return res.status(400).json({ message: "Invalid current password!" });
@@ -38,9 +40,8 @@ export async function changePasswordStudent(req, res) {
 
   // reset password
   if (
-    StudentLogin.updateById(std.id, {
+    StudentLogin.updateById(stdLogin.id, {
       password: newPassword,
-      is_active: true,
     })
   ) {
     return res.status(200).json({ message: "Password changed successfully!" });
