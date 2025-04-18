@@ -2,8 +2,8 @@ import asyncHandler from "express-async-handler";
 import bcrypt from "bcrypt";
 
 import { generateToken, verifyToken } from "../../helpers/tokenManager.js";
-import Student from "../../models/querys/student.js";
-import StudentLogin from "../../models/querys/studentLogin.js";
+import Student from "../../querys/student.js";
+import StudentLogin from "../../querys/studentLogin.js";
 import sendEmail from "../../helpers/sendEmail.js";
 import generateOtp from "../../helpers/optGenerater.js";
 
@@ -72,7 +72,8 @@ export const loginStatusStudent = asyncHandler(async (req, res) => {
 });
 
 export const sendOtpStudent = asyncHandler(async (req, res) => {
-  const { id, reason } = req.body;
+  const { id } = req.body;
+  const { reason } = req.params;
 
   if (!id || !reason) {
     return res.status(400).json({ message: "All fields are required" });

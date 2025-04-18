@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 
-import sql from "../../db/sql.js";
+import sql from "../db/sql.js";
 
 export default class StudentLogin {
   static async findById(id) {

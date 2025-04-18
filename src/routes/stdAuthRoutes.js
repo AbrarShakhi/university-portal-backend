@@ -15,8 +15,10 @@ router.post("/login", loginStudent);
 router.get("/logout", logoutStudent);
 router.get("/login-status", loginStatusStudent);
 
-router.post("/resend-otp", sendOtpStudent);
+router.post("/resend-otp/:reason", sendOtpStudent);
 
 router.patch("/change-password", protect, changePasswordStudent);
+router.post("/activate-account");
+router.post("/forgot-password");
 
 export default router;

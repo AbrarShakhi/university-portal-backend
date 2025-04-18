@@ -1,4 +1,4 @@
-import sql from "../../db/sql.js";
+import sql from "../db/sql.js";
 
 export default class studentDashboard {
   static async getClassSchedule(id, semester_year, semester_season) {

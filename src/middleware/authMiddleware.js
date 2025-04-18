@@ -1,6 +1,6 @@
-import Student from "../models/querys/student.js";
+import Student from "../querys/student.js";
 import { verifyToken } from "../helpers/tokenManager.js";
-import StudentLogin from "../models/querys/studentLogin.js";
+import StudentLogin from "../querys/studentLogin.js";
 
 export async function protect(req, res, next) {
   try {

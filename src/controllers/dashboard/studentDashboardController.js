@@ -1,4 +1,4 @@
-import studentDashboard from "../../models/querys/studentDashboard.js";
+import studentDashboard from "../../querys/studentDashboard.js";
 
 export async function classSchedule(req, res) {
   if (!req.std) {

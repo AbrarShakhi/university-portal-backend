@@ -1,4 +1,4 @@
-import sql from "../../db/sql.js";
+import sql from "../db/sql.js";
 
 export default class Student {
   static async findById(id) {

@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 
 import { isValidPassword } from "../../helpers/passwordValidator.js";
-import StudentLogin from "../../models/querys/studentLogin.js";
+import StudentLogin from "../../querys/studentLogin.js";
 
 export async function changePasswordStudent(req, res) {
   const { currentPassword, newPassword } = req.body;
