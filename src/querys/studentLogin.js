@@ -13,10 +13,10 @@ export default class StudentLogin {
     }
   }
 
-  static async updateById(id, { password, is_active }) {
+  static async updateById(id, password) {
     const result = await sql(
-      "UPDATE student_login SET password = $1, is_active = $2 WHERE id = $3",
-      [await bcrypt.hash(password, 10), is_active, id],
+      "UPDATE student_login SET password = $1 WHERE id = $2",
+      [await bcrypt.hash(password, 10), id],
     );
 
     if (result) {
@@ -49,6 +49,31 @@ export default class StudentLogin {
     return false;
   }
 
+  static async deleteToken(id) {
+    const result = sql(
+      `DELETE FROM student_token 
+              WHERE id = $1`,
+      [id],
+    );
+    if (result) {
+      return true;
+    }
+    return false;
+  }
+
+  static async incrementTryCount(id) {
+    const result = sql(
+      `UPDATE student_token 
+              SET try_count = try_count + 1 
+              WHERE id = $1`,
+      [id],
+    );
+    if (result) {
+      return true;
+    }
+    return false;
+  }
+
   static async updateOtp(id, otp) {
     const result = sql(
       `UPDATE student_token 
@@ -56,6 +81,21 @@ export default class StudentLogin {
               WHERE id = $1`,
       [id, otp],
     );
+    if (result) {
+      return true;
+    }
+    return false;
+  }
+
+  static async insertStudent(id, password) {
+    const result = await sql(
+      `INSERT INTO student_login 
+              (id, password) 
+              VALUES 
+              ($1, $2)`,
+      [id, await bcrypt.hash(password, 10)],
+    );
+
     if (result) {
       return true;
     }

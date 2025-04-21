@@ -5,6 +5,8 @@ import {
   logoutStudent,
   loginStatusStudent,
   sendOtpStudent,
+  activateAccountStudent,
+  forgetPasswordStudent,
 } from "../controllers/auth/studentController.js";
 import { changePasswordStudent } from "../controllers/auth/protectedStudentController.js";
 import { protect } from "../middleware/authMiddleware.js";
@@ -15,10 +17,10 @@ router.post("/login", loginStudent);
 router.get("/logout", logoutStudent);
 router.get("/login-status", loginStatusStudent);
 
-router.patch("/resend-otp/:reason", sendOtpStudent);
+router.patch("/resend-otp/reason=:reason", sendOtpStudent);
 
 router.patch("/change-password", protect, changePasswordStudent);
-router.post("/activate-account");
-router.post("/forgot-password");
+router.post("/activate-account/otp=:otp", activateAccountStudent);
+router.post("/forgot-password/otp=:otp", forgetPasswordStudent);
 
 export default router;

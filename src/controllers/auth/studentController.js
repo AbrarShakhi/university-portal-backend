@@ -164,8 +164,9 @@ export const sendOtpStudent = asyncHandler(async (req, res) => {
   return res.status(200).json({ message: "OTP sent successfully" });
 });
 
-export const activateAccount = asyncHandler(async (req, res) => {
-  const { id, otp } = req.body;
+export const activateAccountStudent = asyncHandler(async (req, res) => {
+  const { id, password } = req.body;
+  const { otp } = req.params;
 
   if (!id || !otp) {
     return res.status(400).json({ message: "All fields are required" });
@@ -190,14 +191,58 @@ export const activateAccount = asyncHandler(async (req, res) => {
   }
   const { otpStat, err_msg } = validateOtp(storedOtp[0], otp);
   if (otpStat === true) {
-    // Active the account
-    // that meaas insert the student to student_login table
-    // delete the otp from student_login table
-    // return success message
+    if (!StudentLogin.insertStudent(id, password)) {
+      return res.status(500).json({ message: "Unable to active account" });
+    }
+    StudentLogin.deleteToken(id);
+    return res.status(200).json({
+      message: "Account activated successfully",
+    });
   }
-  // OTP is invalid
-  // increment the try_count
-  // if try_count >= 3, delete the otp from student_login table
-  // return error message
+  StudentLogin.incrementTryCount(id);
+  return res.status(401).json({ message: err_msg });
+});
+
+export const forgetPasswordStudent = asyncHandler(async (req, res) => {
+  const { id, password } = req.body;
+  const { otp } = req.params;
+
+  if (!id || !otp || !password) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+
+  const std = await Student.findById(id);
+  if (!std || std.length < 1) {
+    return res.status(404).json({ message: "Invalid student ID" });
+  }
+
+  const stdLogin = await StudentLogin.findById(id);
+  if (!stdLogin || stdLogin.length < 1) {
+    return res.status(401).json({ message: "Your ID is not active yet." });
+  }
+  if (std[0].is_dismissed) {
+    return res.status(401).json({ message: "Your ID is dismissed!" });
+  }
+
+  const passRes = isValidPassword(password);
+  if (passRes !== true) {
+    return res.status(400).json({ message: passRes });
+  }
+
+  const storedOtp = await StudentLogin.findTokenById(id);
+  if (!storedOtp || storedOtp.length < 1) {
+    return res.status(401).json({ message: "Invalid OTP" });
+  }
+  const { otpStat, err_msg } = validateOtp(storedOtp[0], otp);
+  if (otpStat === true) {
+    if (!StudentLogin.updateById(id, password)) {
+      return res.status(500).json({ message: "Unable change password" });
+    }
+    StudentLogin.deleteToken(id);
+    return res.status(200).json({
+      message: "password changed successfully",
+    });
+  }
+  StudentLogin.incrementTryCount(id);
   return res.status(401).json({ message: err_msg });
 });
