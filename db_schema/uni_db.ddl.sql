@@ -94,9 +94,9 @@ CREATE TABLE student_token
 (
   created_date timestamp    NOT NULL,
   expired_date timestamp    NOT NULL,
-  id           char(13)     NOT NULL,
   token        varchar(512),
   try_count    int          NOT NULL DEFAULT 0,
+  id           char(13)     NOT NULL,
   PRIMARY KEY (id)
 );
 
@@ -129,11 +129,6 @@ CREATE TABLE timeslot
   end_time   time       NOT NULL,
   PRIMARY KEY (day, start_time, end_time)
 );
-
-ALTER TABLE student_login
-  ADD CONSTRAINT FK_student_TO_student_login
-    FOREIGN KEY (id)
-    REFERENCES student (id);
 
 ALTER TABLE advisor
   ADD CONSTRAINT FK_student_TO_advisor
@@ -210,7 +205,12 @@ ALTER TABLE teaches
     FOREIGN KEY (section_no, course_id, year, season)
     REFERENCES section (section_no, course_id, year, season);
 
-ALTER TABLE student_token
-  ADD CONSTRAINT FK_student_login_TO_student_token
+ALTER TABLE student_login
+  ADD CONSTRAINT FK_student_TO_student_login
     FOREIGN KEY (id)
-    REFERENCES student_login (id);
+    REFERENCES student (id);
+
+ALTER TABLE student_token
+  ADD CONSTRAINT FK_student_TO_student_token
+    FOREIGN KEY (id)
+    REFERENCES student (id);

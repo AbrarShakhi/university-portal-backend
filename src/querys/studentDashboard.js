@@ -24,7 +24,7 @@ export default class studentDashboard {
       "      AND section.season = $3";
     const result = await sql(sql, [id, semester_year, semester_season]);
 
-    if (result && result.rows) {
+    if (result) {
       return result.rows;
     } else {
       return undefined;

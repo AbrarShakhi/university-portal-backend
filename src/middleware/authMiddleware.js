@@ -1,11 +1,14 @@
 import Student from "../querys/student.js";
-import { verifyToken } from "../helpers/tokenManager.js";
+import { cookiename, verifyToken } from "../helpers/tokenManager.js";
 import StudentLogin from "../querys/studentLogin.js";
 
-export async function protect(req, res, next) {
+export async function TokenVerify(req, res, next) {
   try {
-    const { id } = req.body;
-    const stat = verifyToken(req.cookies.token);
+    const decoded = verifyToken(req.cookies[cookiename]);
+    if (decoded === false) {
+      return res.status(401).json({ message: "Not authorized, please login!" });
+    }
+    const { id } = decoded;
 
     const stdExists = await Student.findById(id);
     if (!stdExists && stdExists.length < 1) {
@@ -21,10 +24,6 @@ export async function protect(req, res, next) {
 
     if (stdExists[0].is_dismissed) {
       return res.status(401).json({ message: "Your ID is dismissed!" });
-    }
-
-    if (!stat) {
-      return res.status(401).json({ message: "Not authorized, please login!" });
     }
 
     req.std = stdExists[0];

@@ -6,7 +6,7 @@ export default class StudentLogin {
   static async findById(id) {
     const result = await sql("SELECT * FROM student_login WHERE id = $1", [id]);
 
-    if (result && result.rows) {
+    if (result) {
       return result.rows;
     } else {
       return undefined;
@@ -28,8 +28,7 @@ export default class StudentLogin {
 
   static async findTokenById(id) {
     const result = await sql("SELECT * FROM student_token WHERE id = $1", [id]);
-
-    if (result && result.rows) {
+    if (result) {
       return result.rows;
     }
     return undefined;
@@ -77,9 +76,9 @@ export default class StudentLogin {
   static async updateOtp(id, otp) {
     const result = sql(
       `UPDATE student_token 
-              SET created_date = NOW(), expired_date = NOW() + INTERVAL '5 minutes', token = $2 
-              WHERE id = $1`,
-      [id, otp],
+              SET created_date = NOW(), expired_date = NOW() + INTERVAL '5 minutes', token = $1 
+              WHERE id = $2`,
+      [otp, id],
     );
     if (result) {
       return true;

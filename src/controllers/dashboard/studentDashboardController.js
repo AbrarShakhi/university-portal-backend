@@ -1,6 +1,8 @@
+import asyncHandler from "express-async-handler";
+
 import studentDashboard from "../../querys/studentDashboard.js";
 
-export async function classSchedule(req, res) {
+export const classSchedule = asyncHandler(async (req, res) => {
   if (!req.std) {
     return res.status(401).json({ message: "Not authorized, please login!" });
   }
@@ -15,4 +17,4 @@ export async function classSchedule(req, res) {
     semester_year,
     semester_season,
   );
-}
+});

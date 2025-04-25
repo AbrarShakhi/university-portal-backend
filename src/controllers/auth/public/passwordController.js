@@ -1,9 +1,10 @@
+import asyncHandler from "express-async-handler";
 import bcrypt from "bcrypt";
 
-import { isValidPassword } from "../../helpers/passwordValidator.js";
-import StudentLogin from "../../querys/studentLogin.js";
+import { isValidPassword } from "../../../helpers/passwordValidator.js";
+import StudentLogin from "../../../querys/studentLogin.js";
 
-export async function changePasswordStudent(req, res) {
+export const changePasswordStudent = asyncHandler(async (req, res) => {
   const { currentPassword, newPassword } = req.body;
   if (!req.std || !req.std.id) {
     return res.status(401).json({ message: "Not authorized, please login!" });
@@ -48,4 +49,4 @@ export async function changePasswordStudent(req, res) {
   } else {
     return res.status(500).json({ message: "Error changing password!" });
   }
-}
+});

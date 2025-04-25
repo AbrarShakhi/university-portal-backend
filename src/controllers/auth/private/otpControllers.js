@@ -1,75 +1,11 @@
 import asyncHandler from "express-async-handler";
 import bcrypt from "bcrypt";
 
-import { generateToken, verifyToken } from "../../helpers/tokenManager.js";
-import Student from "../../querys/student.js";
-import StudentLogin from "../../querys/studentLogin.js";
-import sendEmail from "../../helpers/sendEmail.js";
-import { generateOtp, validateOtp } from "../../helpers/otps.js";
-
-const cookie_options = {
-  path: "/",
-  httpOnly: true,
-  maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-  sameSite: "strict", // cross-site access --> allow all third-party cookies
-  secure: process.env.NODE_ENV == "production" ? true : false,
-};
-
-export const loginStudent = asyncHandler(async (req, res) => {
-  const { id, password } = req.body;
-
-  if (!id || !password) {
-    return res.status(400).json({ message: "All fields are required" });
-  }
-
-  const stdExists = await Student.findById(id);
-  if (!stdExists || stdExists.length < 1) {
-    return res.status(404).json({ message: "Invalid student ID" });
-  }
-  const stdLogin = await StudentLogin.findById(id);
-  if (!stdLogin || stdLogin.length < 1) {
-    return res
-      .status(401)
-      .json({ message: "Your ID is not active yet. Active it first." });
-  }
-  if (stdExists[0].is_dismissed) {
-    return res.status(401).json({ message: "Your ID is dismissed!" });
-  }
-
-  const isMatch = await bcrypt.compare(password, stdExists[0].password);
-
-  if (!isMatch) {
-    return res.status(401).json({ message: "Invalid password" });
-  }
-
-  const token = generateToken(id);
-
-  const { first_name, last_name, email } = stdExists[0];
-
-  res.cookie("token", token, cookie_options);
-
-  res.status(200).json({
-    first_name,
-    last_name,
-    id,
-    email,
-    token,
-  });
-});
-
-export const logoutStudent = asyncHandler(async (req, res) => {
-  res.clearCookie("token", cookie_options);
-
-  return res.status(200).json({ message: "Logged out" });
-});
-
-export const loginStatusStudent = asyncHandler(async (req, res) => {
-  if (verifyToken(req.cookies.token)) {
-    return res.status(200).json(true);
-  } else {
-    return res.status(401).json(false);
-  }
-});
+import { generateToken, verifyToken } from "../../../helpers/tokenManager.js";
+import Student from "../../../querys/student.js";
+import StudentLogin from "../../../querys/studentLogin.js";
+import sendEmail from "../../../helpers/sendEmail.js";
+import { generateOtp, validateOtp } from "../../../helpers/otps.js";
 
 export const sendOtpStudent = asyncHandler(async (req, res) => {
   const { id } = req.body;
@@ -161,7 +97,7 @@ export const sendOtpStudent = asyncHandler(async (req, res) => {
     });
   }
 
-  return res.status(200).json({ message: "OTP sent successfully" });
+  return res.status(200).json({ message: "NO email sentss" });
 });
 
 export const activateAccountStudent = asyncHandler(async (req, res) => {
@@ -187,6 +123,7 @@ export const activateAccountStudent = asyncHandler(async (req, res) => {
   }
   const storedOtp = await StudentLogin.findTokenById(id);
   if (!storedOtp || storedOtp.length < 1) {
+    console.log("........");
     return res.status(401).json({ message: "Invalid OTP" });
   }
   const { otpStat, err_msg } = validateOtp(storedOtp[0], otp);
