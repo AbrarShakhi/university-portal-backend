@@ -1,10 +1,13 @@
 import bcrypt from "bcrypt";
 
-import sql from "../db/sql.js";
+import database from "../db/database.js";
 
 export default class StudentLogin {
   static async findById(id) {
-    const result = await sql("SELECT * FROM student_login WHERE id = $1", [id]);
+    const result = await database.query(
+      "SELECT * FROM student_login WHERE id = $1",
+      [id],
+    );
 
     if (result) {
       return result.rows;
@@ -14,7 +17,7 @@ export default class StudentLogin {
   }
 
   static async updateById(id, password) {
-    const result = await sql(
+    const result = await database.query(
       "UPDATE student_login SET password = $1 WHERE id = $2",
       [await bcrypt.hash(password, 10), id],
     );
@@ -27,7 +30,10 @@ export default class StudentLogin {
   }
 
   static async findTokenById(id) {
-    const result = await sql("SELECT * FROM student_token WHERE id = $1", [id]);
+    const result = await database.query(
+      "SELECT * FROM student_token WHERE id = $1",
+      [id],
+    );
     if (result) {
       return result.rows;
     }
@@ -35,7 +41,7 @@ export default class StudentLogin {
   }
 
   static async insertOpt(id, otp) {
-    const result = sql(
+    const result = database.query(
       `INSERT INTO student_token 
               (created_date, expired_date, id, token) 
               VALUES 
@@ -49,7 +55,7 @@ export default class StudentLogin {
   }
 
   static async deleteToken(id) {
-    const result = sql(
+    const result = database.query(
       `DELETE FROM student_token 
               WHERE id = $1`,
       [id],
@@ -61,7 +67,7 @@ export default class StudentLogin {
   }
 
   static async incrementTryCount(id) {
-    const result = sql(
+    const result = database.query(
       `UPDATE student_token 
               SET try_count = try_count + 1 
               WHERE id = $1`,
@@ -74,7 +80,7 @@ export default class StudentLogin {
   }
 
   static async updateOtp(id, otp) {
-    const result = sql(
+    const result = database.query(
       `UPDATE student_token 
               SET created_date = NOW(), expired_date = NOW() + INTERVAL '5 minutes', token = $1 
               WHERE id = $2`,
@@ -87,7 +93,7 @@ export default class StudentLogin {
   }
 
   static async insertStudent(id, password) {
-    const result = await sql(
+    const result = await database.query(
       `INSERT INTO student_login 
               (id, password) 
               VALUES 

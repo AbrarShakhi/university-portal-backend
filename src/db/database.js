@@ -10,18 +10,18 @@ class Database {
 
     const { Pool } = pkg;
 
-    this.#loadDbAuth();
+    this.#loadDbConfig();
 
     try {
-      this.#pool = new Pool(config);
+      this.#pool = new Pool(this.#config);
     } catch (error) {
       console.log("Failed create Postgres pool", error);
-      console.log("Database config:", config);
+      console.log("Database config:", this.#config);
       throw error;
     }
   }
 
-  #loadDbAuth() {
+  #loadDbConfig() {
     this.#config = {
       user: process.env.DB_USER,
       host: process.env.DB_HOST,

@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import crypto from "node:crypto";
 
-class TokenManager {
+export default class CookieManager {
   static cookiename = "_auth_token";
   static cookie_options = {
     path: "/",
@@ -19,7 +19,7 @@ class TokenManager {
     return crypto.createHash("sha256").update(token.toString()).digest("hex");
   }
 
-  static verifyToken(tok) {
+  static verifyCookie(tok) {
     try {
       const decoded = jwt.verify(tok, process.env.JWT_SECRET);
       return decoded || false;
@@ -28,5 +28,3 @@ class TokenManager {
     }
   }
 }
-
-export default TokenManager;
