@@ -1,7 +1,7 @@
 import asyncHandler from "express-async-handler";
 
-import Student from "../../../querys/student.js";
-import StudentLogin from "../../../querys/studentLogin.js";
+import Student from "./../../querys/student.js";
+import StudentLogin from "./../../querys/studentLogin.js";
 import sendEmail from "../../utility/emailManager.js";
 import OtpManager from "../../utility/otpManager.js";
 
