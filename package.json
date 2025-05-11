@@ -2,11 +2,11 @@
   "name": "portal-backend-server",
   "version": "0.0.1",
   "description": "",
-  "main": "server.js",
+  "main": "main.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon server.js",
-    "start": "node server.js"
+    "dev": "nodemon main.js",
+    "start": "node main.js"
   },
   "author": "AbrarShakhi",
   "license": "MIT",
