@@ -1,8 +1,11 @@
 import asyncHandler from "express-async-handler";
 
-import studentDashboard from "./../../querys/studentDashboard.js";
+import studentDashboard from "../../querys/studentDashboard.js";
 
-export default class studentDashboardController {
+export default class ClassScheduleController {
+  /**
+   * @method GET
+   */
   static classSchedule() {
     return asyncHandler(async (req, res) => {
       if (!req.std) {

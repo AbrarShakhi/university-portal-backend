@@ -1,7 +1,7 @@
 import express from "express";
 
-import studentDashboardController from "../controllers/dashboard/studentDashboardController.js";
-import AuthMiddleware from "../middleware/authMiddleware.js";
+import ClassScheduleController from "./../controllers/home/classScheduleController.js";
+import AuthMiddleware from "./../middleware/authMiddleware.js";
 
 class StdAuthRoutes {
   #router = undefined;
@@ -15,8 +15,10 @@ class StdAuthRoutes {
     this.#router.get(
       "/class-schedule",
       AuthMiddleware.protect(),
-      studentDashboardController.classSchedule(),
+      ClassScheduleController.classSchedule(),
     );
+
+    this.#router.get("/all-instructor", AuthMiddleware.protect());
   }
 
   getRouter() {
