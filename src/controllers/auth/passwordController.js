@@ -2,7 +2,7 @@ import asyncHandler from "express-async-handler";
 import bcrypt from "bcrypt";
 
 import PasswordValidator from "./../../utility/passwordValidator.js";
-import StudentLogin from "./../../querys/studentLogin.js";
+import StudentLogin from "../../models/studentLogin.js";
 
 export default class PasswordController {
   static changePasswordStudent() {

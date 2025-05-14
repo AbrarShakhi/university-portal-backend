@@ -9,14 +9,21 @@ CREATE TABLE advisor
   PRIMARY KEY (id)
 );
 
+CREATE TABLE capstone_superviser
+(
+  id               char(13)    NOT NULL,
+  faculty_short_id varchar(10) NOT NULL,
+  PRIMARY KEY (id)
+);
+
 CREATE TABLE course
 (
-  course_id       char(6)      NOT NULL,
-  title           varchar(256) NOT NULL,
-  cradit          numeric      NOT NULL,
-  dept_short_name varchar(6)   NOT NULL,
-  need_cradit     numeric     ,
-  amount          numeric      NOT NULL,
+  course_id       char(6)        NOT NULL,
+  title           varchar(256)   NOT NULL,
+  cradit          numeric(2, 1)  NOT NULL,
+  dept_short_name varchar(6)     NOT NULL,
+  need_cradit     numeric(4, 1) ,
+  amount          numeric(10, 4) NOT NULL,
   PRIMARY KEY (course_id)
 );
 
@@ -27,13 +34,33 @@ CREATE TABLE department
   PRIMARY KEY (dept_short_name)
 );
 
+CREATE TABLE droped
+(
+  id         char(13)      NOT NULL,
+  section_no int           NOT NULL,
+  course_id  char(6)       NOT NULL,
+  year       char(4)       NOT NULL,
+  season     varchar(16)   NOT NULL,
+  refund     numeric(3, 1) NOT NULL,
+  PRIMARY KEY (id, section_no, course_id, year, season)
+);
+
 CREATE TABLE faculty
 (
   faculty_short_id varchar(10)  NOT NULL UNIQUE,
   first_name       varchar(128) NOT NULL,
   last_name        varchar(128),
   dept_short_name  varchar(6)   NOT NULL,
+  fac_email        varchar(128) NOT NULL UNIQUE,
   PRIMARY KEY (faculty_short_id)
+);
+
+CREATE TABLE payment_history
+(
+  id      char(13)       NOT NULL,
+  paytime timestamp      NOT NULL,
+  amount  numeric(16, 4),
+  PRIMARY KEY (id, paytime)
 );
 
 CREATE TABLE prereq
@@ -66,8 +93,9 @@ CREATE TABLE section
 
 CREATE TABLE semester
 (
-  year   char(4)     NOT NULL,
-  season varchar(16) NOT NULL,
+  year   char(4)       NOT NULL,
+  season varchar(16)   NOT NULL,
+  waver  numeric(3, 1),
   PRIMARY KEY (year, season)
 );
 
@@ -80,6 +108,9 @@ CREATE TABLE student
   email           varchar(128) NOT NULL UNIQUE,
   dept_short_name varchar(6)   NOT NULL,
   is_dismissed    boolean      NOT NULL DEFAULT false,
+  address         varchar(128),
+  gardian_name    varchar(128),
+  gardian_phone   varchar(128),
   PRIMARY KEY (id)
 );
 
@@ -102,13 +133,13 @@ CREATE TABLE student_token
 
 CREATE TABLE takes
 (
-  id         char(13)    NOT NULL,
-  grade      numeric    ,
-  is_dropped boolean    ,
-  section_no int         NOT NULL,
-  course_id  char(6)     NOT NULL,
-  year       char(4)     NOT NULL,
-  season     varchar(16) NOT NULL,
+  id         char(13)      NOT NULL,
+  grade      numeric(4, 2),
+  is_dropped boolean      ,
+  section_no int           NOT NULL,
+  course_id  char(6)       NOT NULL,
+  year       char(4)       NOT NULL,
+  season     varchar(16)   NOT NULL,
   PRIMARY KEY (id, section_no, course_id, year, season)
 );
 
@@ -212,5 +243,30 @@ ALTER TABLE student_login
 
 ALTER TABLE student_token
   ADD CONSTRAINT FK_student_TO_student_token
+    FOREIGN KEY (id)
+    REFERENCES student (id);
+
+ALTER TABLE capstone_superviser
+  ADD CONSTRAINT FK_student_TO_capstone_superviser
+    FOREIGN KEY (id)
+    REFERENCES student (id);
+
+ALTER TABLE capstone_superviser
+  ADD CONSTRAINT FK_faculty_TO_capstone_superviser
+    FOREIGN KEY (faculty_short_id)
+    REFERENCES faculty (faculty_short_id);
+
+ALTER TABLE droped
+  ADD CONSTRAINT FK_student_TO_droped
+    FOREIGN KEY (id)
+    REFERENCES student (id);
+
+ALTER TABLE droped
+  ADD CONSTRAINT FK_section_TO_droped
+    FOREIGN KEY (section_no, course_id, year, season)
+    REFERENCES section (section_no, course_id, year, season);
+
+ALTER TABLE payment_history
+  ADD CONSTRAINT FK_student_TO_payment_history
     FOREIGN KEY (id)
     REFERENCES student (id);

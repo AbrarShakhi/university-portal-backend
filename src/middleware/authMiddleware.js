@@ -1,8 +1,8 @@
 import asyncHandler from "express-async-handler";
 
-import Student from "../querys/student.js";
+import Student from "../models/student.js";
 import CookieManager from "../utility/cookieManager.js";
-import StudentLogin from "../querys/studentLogin.js";
+import StudentLogin from "../models/studentLogin.js";
 
 export default class AuthMiddleware {
   static protect() {

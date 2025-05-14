@@ -1,8 +1,8 @@
 import asyncHandler from "express-async-handler";
 
-import studentDashboard from "../../models/studentSchedule.js";
+import studentDashboard from "../../querys/studentDashboard.js";
 
-export default class ClassScheduleController {
+export default class FacultyInfoController {
   /**
    * @method GET
    */
@@ -13,10 +13,11 @@ export default class ClassScheduleController {
           .status(401)
           .json({ message: "Not authorized, please login!" });
       }
-      const { id } = req.std;
-      const { semester_year, semester_season } = req.body;
-      if (!semester) {
-        return res.status(400).json({ message: "Semester is required!" });
+      const { faculty_short_id } = req.body;
+      if (!faculty_short_id) {
+        return res
+          .status(400)
+          .json({ message: "faculty_short_id is required!" });
       }
       // Assuming you have a function to get the class schedule
       const schedule = await studentDashboard.getClassSchedule(

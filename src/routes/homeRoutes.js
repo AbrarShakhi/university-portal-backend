@@ -18,7 +18,20 @@ class StdAuthRoutes {
       ClassScheduleController.classSchedule(),
     );
 
-    this.#router.get("/all-instructor", AuthMiddleware.protect());
+    this.#router.get("/tution-fees", AuthMiddleware.protect());
+    this.#router.get("/tution-history", AuthMiddleware.protect());
+
+    this.#router.get("/std-profile", AuthMiddleware.protect());
+
+    this.#router.get("/list-faculty", AuthMiddleware.protect());
+    this.#router.get("/info-faculty", AuthMiddleware.protect());
+
+    this.#router.get("/list-courses", AuthMiddleware.protect());
+    this.#router.get("/info-courses", AuthMiddleware.protect());
+
+    this.#router.get("/grade-report", AuthMiddleware.protect());
+
+    this.#router.get("/eval-faculty-list", AuthMiddleware.protect());
   }
 
   getRouter() {

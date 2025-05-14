@@ -2,8 +2,8 @@ import asyncHandler from "express-async-handler";
 import bcrypt from "bcrypt";
 
 import CookieManager from "./../../utility/cookieManager.js";
-import Student from "./../../querys/student.js";
-import StudentLogin from "./../../querys/studentLogin.js";
+import Student from "../../models/student.js";
+import StudentLogin from "../../models/studentLogin.js";
 
 export default class LoginController {
   static loginStudent() {
