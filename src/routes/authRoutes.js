@@ -15,30 +15,30 @@ class StdAuthRoutes {
   }
 
   #initializeRoutes() {
-    this.#router.post("/login", LoginController.loginStudent());
-    this.#router.get("/logout", LoginController.logoutStudent());
+    this.#router.post("/auth/login", LoginController.loginStudent());
+    this.#router.get("/auth/logout", LoginController.logoutStudent());
 
     this.#router.patch(
-      "/resend-otp/reason=:reason",
+      "/auth/resend-otp/reason=:reason",
       OtpController.sendOtpStudent(),
     );
 
     this.#router.patch(
-      "/change-password",
+      "/auth/change-password",
       AuthMiddleware.protect(),
       PasswordController.changePasswordStudent(),
     );
     this.#router.post(
-      "/activate-account/otp=:otp",
+      "/auth/activate-account/otp=:otp",
       OtpController.activateAccountStudent(),
     );
     this.#router.post(
-      "/forgot-password/otp=:otp",
+      "/auth/forgot-password/otp=:otp",
       OtpController.forgetPasswordStudent(),
     );
 
     this.#router.get(
-      "/std-home",
+      "/auth/std-home",
       AuthMiddleware.protect(),
       HomeController.homeStudent(),
     );

@@ -34,8 +34,4 @@ export default class studentDashboard {
       return undefined;
     }
   }
-
-  static async getFacultyInfo(faculty_short_id) {
-    const sql = "";
-  }
 }

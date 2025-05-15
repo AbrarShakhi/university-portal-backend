@@ -20,11 +20,7 @@ export default class FacultyInfoController {
           .json({ message: "faculty_short_id is required!" });
       }
       // Assuming you have a function to get the class schedule
-      const schedule = await studentDashboard.getClassSchedule(
-        id,
-        semester_year,
-        semester_season,
-      );
+      const schedule = 
     });
   }
 }

@@ -48,15 +48,14 @@ export default class LoginController {
         first_name,
         last_name,
         id,
-        email,
-        _auth_token,
+        email
       });
     });
   }
 
   static logoutStudent() {
     return asyncHandler(async (req, res) => {
-      res.clearCookie("token", CookieManager.cookie_options);
+      res.clearCookie(CookieManager.cookiename, CookieManager.cookie_options);
 
       return res.status(200).json({ message: "Logged out" });
     });

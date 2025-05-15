@@ -2,6 +2,7 @@ import express from "express";
 
 import ClassScheduleController from "./../controllers/home/classScheduleController.js";
 import AuthMiddleware from "./../middleware/authMiddleware.js";
+import AccountLedgerController from "./../controllers/home/accountLedgerController.js";
 
 class StdAuthRoutes {
   #router = undefined;
@@ -18,8 +19,16 @@ class StdAuthRoutes {
       ClassScheduleController.classSchedule(),
     );
 
-    this.#router.get("/tution-fees", AuthMiddleware.protect());
-    this.#router.get("/tution-history", AuthMiddleware.protect());
+    this.#router.get(
+      "/tution-fees",
+      AuthMiddleware.protect(),
+      AccountLedgerController.tuitionFees(),  
+    );
+    this.#router.get(
+      "/tution-history",
+      AuthMiddleware.protect(),
+      AccountLedgerController.tuitionHistory(),
+    );
 
     this.#router.get("/std-profile", AuthMiddleware.protect());
 

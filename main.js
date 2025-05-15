@@ -36,7 +36,15 @@ class Main {
   }
 
   #init() {
-    this.app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
+    this.app.use(
+      cors({
+        origin:
+          process.env.NODE_ENV === "production"
+            ? "your-production-frontend-url"
+            : "http://localhost:5173", // or whatever port your frontend runs on
+        credentials: true,
+      }),
+    );
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(cookieParser());
