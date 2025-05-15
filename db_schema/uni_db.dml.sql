@@ -119,10 +119,6 @@ INSERT INTO student_token (id, created_date, expired_date, token, try_count) VAL
 ('2022-1-60-206', NOW(), NOW() + INTERVAL '1 hour', 'token_abc123', 0),
 ('2022-3-60-111', NOW(), NOW() + INTERVAL '1 hour', 'token_def456', 0);
 
--- DROPED
-INSERT INTO droped (id, section_no, course_id, year, season, refund) VALUES
-('2022-3-60-022', 1, 'CSE101', '2023', 'Spring', 75.0);
-
 -- PAYMENT_HISTORY
 INSERT INTO payment_history (id, paytime, amount) VALUES
 ('2022-1-60-206', NOW() - INTERVAL '30 days', 5000.00),

@@ -34,17 +34,6 @@ CREATE TABLE department
   PRIMARY KEY (dept_short_name)
 );
 
-CREATE TABLE droped
-(
-  id         char(13)      NOT NULL,
-  section_no int           NOT NULL,
-  course_id  char(6)       NOT NULL,
-  year       char(4)       NOT NULL,
-  season     varchar(16)   NOT NULL,
-  refund     numeric(3, 1) NOT NULL,
-  PRIMARY KEY (id, section_no, course_id, year, season)
-);
-
 CREATE TABLE faculty
 (
   faculty_short_id varchar(10)  NOT NULL UNIQUE,
@@ -134,8 +123,8 @@ CREATE TABLE student_token
 CREATE TABLE takes
 (
   id         char(13)      NOT NULL,
-  grade      numeric(4, 2),
-  is_dropped boolean      ,
+  grade      numeric(4, 2) DEFAULT 0.0,
+  is_dropped boolean       DEFAULT false,
   section_no int           NOT NULL,
   course_id  char(6)       NOT NULL,
   year       char(4)       NOT NULL,
@@ -255,16 +244,6 @@ ALTER TABLE capstone_superviser
   ADD CONSTRAINT FK_faculty_TO_capstone_superviser
     FOREIGN KEY (faculty_short_id)
     REFERENCES faculty (faculty_short_id);
-
-ALTER TABLE droped
-  ADD CONSTRAINT FK_student_TO_droped
-    FOREIGN KEY (id)
-    REFERENCES student (id);
-
-ALTER TABLE droped
-  ADD CONSTRAINT FK_section_TO_droped
-    FOREIGN KEY (section_no, course_id, year, season)
-    REFERENCES section (section_no, course_id, year, season);
 
 ALTER TABLE payment_history
   ADD CONSTRAINT FK_student_TO_payment_history
