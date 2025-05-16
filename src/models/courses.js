@@ -1,3 +1,5 @@
+import database from "../db/database.js";
+
 export default class Courses {
   static async list(dept_short_name, semester, year) {
     const sql = `

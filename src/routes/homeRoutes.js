@@ -6,6 +6,7 @@ import AccountLedgerController from "./../controllers/home/accountLedgerControll
 import ProfileController from "../controllers/home/profileController.js";
 import FacultyController from "../controllers/home/facultyController.js";
 import CourseController from "../controllers/home/courseController.js";
+import gradeController from "../controllers/home/gradeController.js";
 
 class StdAuthRoutes {
   #router = undefined;
@@ -66,7 +67,7 @@ class StdAuthRoutes {
       CourseController.info(),
     );
 
-    this.#router.get("/grade-report", AuthMiddleware.protect());
+    this.#router.get("/grade-report", AuthMiddleware.protect(), gradeController.report());
 
     this.#router.get("/eval-faculty-list", AuthMiddleware.protect());
   }
