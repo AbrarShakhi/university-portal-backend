@@ -5,6 +5,7 @@ import AuthMiddleware from "./../middleware/authMiddleware.js";
 import AccountLedgerController from "./../controllers/home/accountLedgerController.js";
 import ProfileController from "../controllers/home/profileController.js";
 import FacultyController from "../controllers/home/facultyController.js";
+import CourseController from "../controllers/home/courseController.js";
 
 class StdAuthRoutes {
   #router = undefined;
@@ -54,8 +55,16 @@ class StdAuthRoutes {
       FacultyController.teaches(),
     );
 
-    this.#router.get("/list-courses", AuthMiddleware.protect());
-    this.#router.get("/info-courses", AuthMiddleware.protect());
+    this.#router.get(
+      "/list-courses/:dept_short_name/:semester/:year",
+      AuthMiddleware.protect(),
+      CourseController.list(),
+    );
+    this.#router.get(
+      "/info-courses/:course_id/:semester/:year",
+      AuthMiddleware.protect(),
+      CourseController.info(),
+    );
 
     this.#router.get("/grade-report", AuthMiddleware.protect());
 
