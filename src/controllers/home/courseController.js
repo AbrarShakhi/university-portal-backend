@@ -7,7 +7,9 @@ export default class CourseController {
     return asyncHandler(async (req, res) => {
       const { dept_short_name, semester, year } = req.params;
       if (!dept_short_name || !semester || !year) {
-        return res.status(400).json({ message: "Missing required parameters!" });
+        return res
+          .status(400)
+          .json({ message: "Missing required parameters!" });
       }
 
       const courses = await Courses.list(dept_short_name, semester, year);
@@ -22,7 +24,9 @@ export default class CourseController {
     return asyncHandler(async (req, res) => {
       const { course_id, semester, year } = req.params;
       if (!course_id || !semester || !year) {
-        return res.status(400).json({ message: "Missing required parameters!" });
+        return res
+          .status(400)
+          .json({ message: "Missing required parameters!" });
       }
 
       const course = await Courses.info(course_id, semester, year);

@@ -1,6 +1,6 @@
-export default class courses {
-    static async list(dept_short_name, semester, year) {
-        const sql = `
+export default class Courses {
+  static async list(dept_short_name, semester, year) {
+    const sql = `
         SELECT 
             s.section_no,
             c.course_id,
@@ -47,16 +47,16 @@ export default class courses {
             f.last_name
         ORDER BY c.course_id, s.section_no;
         `;
-        const result = await database.query(sql, [dept_short_name, semester, year]);
-        if (result && result.rows.length > 0) {
-            return result.rows;
-        } else {
-            return undefined;
-        }
+    const result = await database.query(sql, [dept_short_name, semester, year]);
+    if (result && result.rows.length > 0) {
+      return result.rows;
+    } else {
+      return undefined;
     }
+  }
 
-    static async info(course_id, semester, year) {
-        const sql = `
+  static async info(course_id, semester, year) {
+    const sql = `
         SELECT 
             c.course_id,
             c.title as course_title,
@@ -116,11 +116,11 @@ export default class courses {
             f.room_no
         ORDER BY s.section_no;
         `;
-        const result = await database.query(sql, [course_id, semester, year]);
-        if (result && result.rows.length > 0) {
-            return result.rows;
-        } else {
-            return undefined;
-        }
+    const result = await database.query(sql, [course_id, semester, year]);
+    if (result && result.rows.length > 0) {
+      return result.rows;
+    } else {
+      return undefined;
     }
+  }
 }
