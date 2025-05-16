@@ -4,6 +4,7 @@ import Student from "../../models/student.js";
 import StudentLogin from "../../models/studentLogin.js";
 import sendEmail from "../../utility/emailManager.js";
 import OtpManager from "../../utility/otpManager.js";
+import PasswordValidator from "../../utility/passwordValidator.js";
 
 export default class OtpController {
   static sendOtpStudent() {
@@ -106,7 +107,7 @@ export default class OtpController {
       const { id, password } = req.body;
       const { otp } = req.params;
 
-      if (!id || !otp) {
+      if (!id || !otp || !password) {
         return res.status(400).json({ message: "All fields are required" });
       }
 
@@ -123,6 +124,12 @@ export default class OtpController {
           message: "Your ID is already active. No need to active it again.",
         });
       }
+
+      const passRes = PasswordValidator.isValidPassword(password);
+      if (passRes !== true) {
+        return res.status(400).json({ message: passRes });
+      }
+
       const storedOtp = await StudentLogin.findTokenById(id);
       if (!storedOtp || storedOtp.length < 1) {
         return res.status(401).json({ message: "Invalid OTP" });
@@ -164,7 +171,7 @@ export default class OtpController {
         return res.status(401).json({ message: "Your ID is dismissed!" });
       }
 
-      const passRes = isValidPassword(password);
+      const passRes = PasswordValidator.isValidPassword(password);
       if (passRes !== true) {
         return res.status(400).json({ message: passRes });
       }

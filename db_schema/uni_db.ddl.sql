@@ -41,6 +41,7 @@ CREATE TABLE faculty
   last_name        varchar(128),
   dept_short_name  varchar(6)   NOT NULL,
   fac_email        varchar(128) NOT NULL UNIQUE,
+  room_no          varchar(7)   NOT NULL,
   PRIMARY KEY (faculty_short_id)
 );
 
@@ -249,3 +250,8 @@ ALTER TABLE payment_history
   ADD CONSTRAINT FK_student_TO_payment_history
     FOREIGN KEY (id)
     REFERENCES student (id);
+
+ALTER TABLE faculty
+  ADD CONSTRAINT FK_room_TO_faculty
+    FOREIGN KEY (room_no)
+    REFERENCES room (room_no);

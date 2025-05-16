@@ -33,15 +33,11 @@ export default class StudentLedger {
           t.season,
           c.amount as course_amount,
           COALESCE(s.waver, 0) as semester_waver,
-          COALESCE(d.refund, 0) as drop_refund
+          CASE WHEN t.is_dropped THEN 50 ELSE 0 END as drop_refund
         FROM 
           takes t
           JOIN course c ON t.course_id = c.course_id
           JOIN semester s ON t.year = s.year AND t.season = s.season
-          LEFT JOIN droped d ON t.id = d.id 
-            AND t.course_id = d.course_id 
-            AND t.year = d.year 
-            AND t.season = d.season
         WHERE 
           t.id = $1
       ),

@@ -25,5 +25,14 @@ export default class ClassScheduleController {
         semester_season,
       );
     });
+
+    if (schedule) {
+      return res.status(200).json({
+        message: "Class schedule retrieved successfully",
+        data: schedule,
+      });
+    } else {
+      return res.status(404).json({ message: "Class schedule not found" });
+    }
   }
 }

@@ -1,21 +1,20 @@
 -- Delete from child tables first to avoid foreign key violations
-DELETE FROM takes;
-DELETE FROM teaches;
-DELETE FROM advisor;
-DELETE FROM capstone_superviser;
-DELETE FROM prereq;
-DELETE FROM section;
-DELETE FROM student_token;
-DELETE FROM student_login;
-DELETE FROM droped;
-DELETE FROM payment_history;
-DELETE FROM student;
-DELETE FROM faculty;
-DELETE FROM course;
-DELETE FROM room;
-DELETE FROM timeslot;
-DELETE FROM semester;
-DELETE FROM department;
+DELETE FROM takes CASCADE;
+DELETE FROM teaches CASCADE;
+DELETE FROM advisor CASCADE;
+DELETE FROM capstone_superviser CASCADE;
+DELETE FROM prereq CASCADE;
+DELETE FROM section CASCADE;
+DELETE FROM student_token CASCADE;
+DELETE FROM student_login CASCADE;
+DELETE FROM payment_history CASCADE;
+DELETE FROM student CASCADE;
+DELETE FROM faculty CASCADE;
+DELETE FROM course CASCADE;
+DELETE FROM room CASCADE;
+DELETE FROM timeslot CASCADE;
+DELETE FROM semester CASCADE;
+DELETE FROM department CASCADE;
 
 -- DEPARTMENT
 INSERT INTO department (dept_short_name, long_name) VALUES
@@ -24,12 +23,19 @@ INSERT INTO department (dept_short_name, long_name) VALUES
 ('PHY', 'Physics'),
 ('MAT', 'Mathematics');
 
+-- ROOM
+INSERT INTO room (room_no, building) VALUES
+('101', 'Engineering Building'),
+('201', 'Science Building'),
+('301', 'Main Building'),
+('401', 'Mathematics Building');
+
 -- FACULTY
-INSERT INTO faculty (faculty_short_id, first_name, last_name, dept_short_name, fac_email) VALUES
-('JS_CSE', 'John', 'Smith', 'CSE', 'john.smith@ewubd.edu'),
-('SJ_EEE', 'Sarah', 'Johnson', 'EEE', 'sarah.johnson@ewubd.edu'),
-('RW_PHY', 'Robert', 'Williams', 'PHY', 'robert.williams@ewubd.edu'),
-('EB_MAT', 'Emily', 'Brown', 'MAT', 'emily.brown@ewubd.edu');
+INSERT INTO faculty (faculty_short_id, first_name, last_name, dept_short_name, fac_email, room_no) VALUES
+('JS_CSE', 'John', 'Smith', 'CSE', 'john.smith@ewubd.edu', '101'),
+('SJ_EEE', 'Sarah', 'Johnson', 'EEE', 'sarah.johnson@ewubd.edu', '201'),
+('RW_PHY', 'Robert', 'Williams', 'PHY', 'robert.williams@ewubd.edu', '301'),
+('EB_MAT', 'Emily', 'Brown', 'MAT', 'emily.brown@ewubd.edu', '401');
 
 -- STUDENT
 INSERT INTO student (id, first_name, last_name, mobile_no, email, dept_short_name, is_dismissed, address, gardian_name, gardian_phone) VALUES
@@ -51,13 +57,6 @@ INSERT INTO advisor (id, faculty_short_id) VALUES
 INSERT INTO capstone_superviser (id, faculty_short_id) VALUES
 ('2022-1-60-206', 'JS_CSE'),
 ('2022-3-60-111', 'SJ_EEE');
-
--- ROOM
-INSERT INTO room (room_no, building) VALUES
-('101', 'Engineering Building'),
-('201', 'Science Building'),
-('301', 'Main Building'),
-('401', 'Mathematics Building');
 
 -- TIMESLOT
 INSERT INTO timeslot (day, start_time, end_time) VALUES

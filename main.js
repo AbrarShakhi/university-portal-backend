@@ -7,6 +7,7 @@ import path from "node:path";
 
 import database from "./src/db/database.js";
 import ErrorHandler from "./src/middleware/errorhandler.js";
+import { platform } from "node:os";
 
 /**
 SERVER_PORT
@@ -33,6 +34,33 @@ class Main {
     this.route_dir = path.join(process.cwd(), "src", "routes");
 
     this.#init();
+    this.#useRoutes();
+  }
+
+  #useRoutes() {
+    fs.readdirSync(this.route_dir).forEach((file) => {
+      const filePath = path.join(this.route_dir, file);
+      let fileURL = filePath;
+
+      if (platform.name === "win32") {
+        fileURL = pathToFileURL(filePath).href;
+      }
+
+      import(fileURL)
+        .then((route) => {
+          if (route.default) {
+            this.app.use(this.subRoute, route.default);
+            console.log(`Successfully loaded route: ${filePath}`);
+          } else {
+            console.warn(
+              `Route file ${filePath} does not have a default export.`,
+            );
+          }
+        })
+        .catch((err) => {
+          console.error(`Failed to load route file ${filePath}:`, err);
+        });
+    });
   }
 
   #init() {
@@ -49,16 +77,6 @@ class Main {
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(cookieParser());
     this.app.use(ErrorHandler.handleError);
-
-    fs.readdirSync(this.route_dir).forEach((file) => {
-      import(path.join(this.route_dir, file))
-        .then((route) => {
-          this.app.use(this.subRoute, route.default);
-        })
-        .catch((err) => {
-          console.log("Failed to load route file", err);
-        });
-    });
   }
 
   async start() {

@@ -3,6 +3,8 @@ import express from "express";
 import ClassScheduleController from "./../controllers/home/classScheduleController.js";
 import AuthMiddleware from "./../middleware/authMiddleware.js";
 import AccountLedgerController from "./../controllers/home/accountLedgerController.js";
+import ProfileController from "../controllers/home/profileController.js";
+import FacultyController from "../controllers/home/facultyController.js";
 
 class StdAuthRoutes {
   #router = undefined;
@@ -22,7 +24,7 @@ class StdAuthRoutes {
     this.#router.get(
       "/tution-fees",
       AuthMiddleware.protect(),
-      AccountLedgerController.tuitionFees(),  
+      AccountLedgerController.tuitionFees(),
     );
     this.#router.get(
       "/tution-history",
@@ -30,10 +32,27 @@ class StdAuthRoutes {
       AccountLedgerController.tuitionHistory(),
     );
 
-    this.#router.get("/std-profile", AuthMiddleware.protect());
+    this.#router.get(
+      "/std-profile",
+      AuthMiddleware.protect(),
+      ProfileController.profile(),
+    );
 
-    this.#router.get("/list-faculty", AuthMiddleware.protect());
-    this.#router.get("/info-faculty", AuthMiddleware.protect());
+    this.#router.get(
+      "/list-faculty",
+      AuthMiddleware.protect(),
+      FacultyController.list(),
+    );
+    this.#router.get(
+      "/info-faculty/:faculty_short_id",
+      AuthMiddleware.protect(),
+      FacultyController.info(),
+    );
+    this.#router.get(
+      "/teaches/:faculty_short_id/:semester/:year",
+      AuthMiddleware.protect(),
+      FacultyController.teaches(),
+    );
 
     this.#router.get("/list-courses", AuthMiddleware.protect());
     this.#router.get("/info-courses", AuthMiddleware.protect());
