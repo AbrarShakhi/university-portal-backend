@@ -50,9 +50,9 @@ export default class StudentProfile {
     `;
     const result = await database.query(sql, [studentId]);
     if (result && result.rows.length > 0) {
-        return result.rows[0]; // Return single object since we're querying for one student
+      return result.rows[0];
     } else {
-        return undefined;
+      return undefined;
     }
   }
 }

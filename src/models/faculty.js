@@ -13,7 +13,7 @@ export default class StudentProfile {
     ORDER BY f.faculty_short_id
     `;
     const result = await database.query(sql);
-    if (result && result.rows.length > 0) {
+    if (result) {
       return result.rows;
     } else {
       return undefined;
@@ -63,12 +63,15 @@ export default class StudentProfile {
       AND t.year = $3
     ORDER BY s.day, s.start_time
     `;
-    const result = await database.query(sql, [faculty_short_id, semester, year]);
-    if (result && result.rows.length > 0) {
+    const result = await database.query(sql, [
+      faculty_short_id,
+      semester,
+      year,
+    ]);
+    if (result) {
       return result.rows;
     } else {
       return undefined;
     }
   }
-  
 }

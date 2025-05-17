@@ -50,7 +50,7 @@ export default class Courses {
         ORDER BY c.course_id, s.section_no;
         `;
     const result = await database.query(sql, [dept_short_name, semester, year]);
-    if (result && result.rows.length > 0) {
+    if (result) {
       return result.rows;
     } else {
       return undefined;
@@ -119,7 +119,7 @@ export default class Courses {
         ORDER BY s.section_no;
         `;
     const result = await database.query(sql, [course_id, semester, year]);
-    if (result && result.rows.length > 0) {
+    if (result) {
       return result.rows;
     } else {
       return undefined;

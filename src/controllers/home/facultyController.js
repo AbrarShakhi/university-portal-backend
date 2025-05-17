@@ -5,6 +5,12 @@ import Faculty from "../../models/faculty.js";
 export default class FacultyController {
   static list() {
     return asyncHandler(async (req, res) => {
+      if (!req.std) {
+        return res
+          .status(401)
+          .json({ message: "Not authorized, please login!" });
+      }
+
       const faculties = await Faculty.list();
       if (!faculties) {
         return res.status(404).json({ message: "No faculties found!" });
@@ -15,6 +21,12 @@ export default class FacultyController {
 
   static info() {
     return asyncHandler(async (req, res) => {
+      if (!req.std) {
+        return res
+          .status(401)
+          .json({ message: "Not authorized, please login!" });
+      }
+
       const { faculty_short_id } = req.params;
       const faculty = await Faculty.info(faculty_short_id);
       if (!faculty) {
@@ -26,6 +38,11 @@ export default class FacultyController {
 
   static teaches() {
     return asyncHandler(async (req, res) => {
+      if (!req.std) {
+        return res
+          .status(401)
+          .json({ message: "Not authorized, please login!" });
+      }
       const { faculty_short_id, semester, year } = req.params;
       if (!faculty_short_id || !semester || !year) {
         return res
