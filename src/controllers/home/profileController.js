@@ -2,9 +2,6 @@ import asyncHandler from "express-async-handler";
 import StudentProfile from "../../models/studentProfile.js";
 
 export default class ProfileController {
-  /**
-   * @method GET
-   */
   static profile() {
     return asyncHandler(async (req, res) => {
       if (!req.std) {

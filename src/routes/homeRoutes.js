@@ -67,9 +67,13 @@ class StdAuthRoutes {
       CourseController.info(),
     );
 
-    this.#router.get("/grade-report", AuthMiddleware.protect(), gradeController.report());
+    this.#router.get(
+      "/grade-report",
+      AuthMiddleware.protect(),
+      gradeController.report(),
+    );
 
-    this.#router.get("/eval-faculty-list", AuthMiddleware.protect());
+    // this.#router.get("/eval-faculty-list", AuthMiddleware.protect());
   }
 
   getRouter() {

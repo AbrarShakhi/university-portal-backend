@@ -3,9 +3,6 @@ import asyncHandler from "express-async-handler";
 import studentDashboard from "../../models/studentSchedule.js";
 
 export default class ClassScheduleController {
-  /**
-   * @method GET
-   */
   static classSchedule() {
     return asyncHandler(async (req, res) => {
       if (!req.std) {
@@ -24,15 +21,14 @@ export default class ClassScheduleController {
         semester_year,
         semester_season,
       );
+      if (schedule) {
+        return res.status(200).json({
+          message: "Class schedule retrieved successfully",
+          data: schedule,
+        });
+      } else {
+        return res.status(404).json({ message: "Class schedule not found" });
+      }
     });
-
-    if (schedule) {
-      return res.status(200).json({
-        message: "Class schedule retrieved successfully",
-        data: schedule,
-      });
-    } else {
-      return res.status(404).json({ message: "Class schedule not found" });
-    }
   }
 }

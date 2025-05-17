@@ -3,7 +3,7 @@ import asyncHandler from "express-async-handler";
 import Courses from "../../models/courses.js";
 
 export default class CourseController {
-  static async list() {
+  static list() {
     return asyncHandler(async (req, res) => {
       const { dept_short_name, semester, year } = req.params;
       if (!dept_short_name || !semester || !year) {
@@ -20,7 +20,7 @@ export default class CourseController {
     });
   }
 
-  static async info() {
+  static info() {
     return asyncHandler(async (req, res) => {
       const { course_id, semester, year } = req.params;
       if (!course_id || !semester || !year) {

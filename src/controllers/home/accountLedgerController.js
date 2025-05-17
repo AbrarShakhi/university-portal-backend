@@ -3,9 +3,6 @@ import asyncHandler from "express-async-handler";
 import StudentLedger from "../../models/studentLedger.js";
 
 export default class AccountLedgerController {
-  /**
-   * @method GET
-   */
   static tuitionHistory() {
     return asyncHandler(async (req, res) => {
       if (!req.std) {
@@ -23,9 +20,7 @@ export default class AccountLedgerController {
       res.status(200).json(history);
     });
   }
-  /**
-   * @method GET
-   */
+
   static tuitionFees() {
     return asyncHandler(async (req, res) => {
       if (!req.std) {
