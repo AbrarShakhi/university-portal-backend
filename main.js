@@ -4,24 +4,10 @@ import cors from "cors";
 import fs from "node:fs";
 import cookieParser from "cookie-parser";
 import path from "node:path";
+import { pathToFileURL } from "node:url";
 
 import database from "./src/db/database.js";
 import ErrorHandler from "./src/middleware/errorhandler.js";
-import { platform } from "node:os";
-
-/**
-SERVER_PORT
-JWT_SECRET
-DB_USER
-DB_HOST
-DB_NAME
-DB_PASSWORD
-DB_PORT
-CLIENT_URL
-APP_EMAIL
-EMAIL_PASS
-NODE_ENV
- */
 
 class Main {
   constructor() {
@@ -35,16 +21,36 @@ class Main {
 
     this.#init();
     this.#useRoutes();
+    // this.#useRoutesWindows();
+  }
+
+  #useRoutesWindows() {
+    fs.readdirSync(this.route_dir).forEach((file) => {
+      const filePath = path.join(this.route_dir, file);
+
+      const fileURL = pathToFileURL(filePath).href;
+
+      import(fileURL)
+        .then((route) => {
+          if (route.default) {
+            this.app.use(this.subRoute, route.default);
+            console.log(`Successfully loaded route: ${filePath}`);
+          } else {
+            console.warn(
+              `Route file ${filePath} does not have a default export.`,
+            );
+          }
+        })
+        .catch((err) => {
+          console.error(`Failed to load route file ${filePath}:`, err);
+        });
+    });
   }
 
   #useRoutes() {
     fs.readdirSync(this.route_dir).forEach((file) => {
       const filePath = path.join(this.route_dir, file);
-      let fileURL = filePath;
-
-      if (platform.name === "win32") {
-        fileURL = pathToFileURL(filePath).href;
-      }
+      const fileURL = pathToFileURL(filePath).href; // Always convert to file:// URL
 
       import(fileURL)
         .then((route) => {
