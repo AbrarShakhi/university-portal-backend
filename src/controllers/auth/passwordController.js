@@ -33,25 +33,22 @@ export default class PasswordController {
 
       //find old password by id
       const stdLogin = await StudentLogin.findById(req.std.id);
-      if (!stdLogin || stdLogin.length < 1) {
+      if (!stdLogin || stdLogin.length === 0) {
         return res.status(404).json({ message: "Account is Not Active." });
       }
 
-      const { old_password } = stdLogin[0].password;
-
       // compare current password with the hashed password in the database
-      const isMatch = await bcrypt.compare(currentPassword, old_password);
+      const isMatch = await bcrypt.compare(
+        currentPassword,
+        stdLogin[0].password,
+      );
 
       if (!isMatch) {
         return res.status(400).json({ message: "Invalid current password!" });
       }
 
       // reset password
-      if (
-        StudentLogin.updateById(stdLogin.id, {
-          password: newPassword,
-        })
-      ) {
+      if (StudentLogin.updateById(stdLogin[0].id, newPassword)) {
         return res
           .status(200)
           .json({ message: "Password changed successfully!" });
