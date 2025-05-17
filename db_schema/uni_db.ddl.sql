@@ -45,6 +45,16 @@ CREATE TABLE faculty
   PRIMARY KEY (faculty_short_id)
 );
 
+CREATE TABLE faculty_eval
+(
+  faculty_short_id varchar(10)   NOT NULL,
+  rating           numeric(2, 0),
+  id               char(13)      NOT NULL,
+  year             char(4)       NOT NULL,
+  season           varchar(16)   NOT NULL,
+  PRIMARY KEY (faculty_short_id, id, year, season)
+);
+
 CREATE TABLE payment_history
 (
   id      char(13)       NOT NULL,
@@ -151,6 +161,14 @@ CREATE TABLE timeslot
   PRIMARY KEY (day, start_time, end_time)
 );
 
+CREATE TABLE uni_options
+(
+  is_advising boolean     NOT NULL DEFAULT false,
+  is_fac_eval boolean     NOT NULL DEFAULT false,
+  year        char(4)     NOT NULL,
+  season      varchar(16) NOT NULL
+);
+
 ALTER TABLE advisor
   ADD CONSTRAINT FK_student_TO_advisor
     FOREIGN KEY (id)
@@ -255,3 +273,23 @@ ALTER TABLE faculty
   ADD CONSTRAINT FK_room_TO_faculty
     FOREIGN KEY (room_no)
     REFERENCES room (room_no);
+
+ALTER TABLE uni_options
+  ADD CONSTRAINT FK_semester_TO_uni_options
+    FOREIGN KEY (year, season)
+    REFERENCES semester (year, season);
+
+ALTER TABLE faculty_eval
+  ADD CONSTRAINT FK_faculty_TO_faculty_eval
+    FOREIGN KEY (faculty_short_id)
+    REFERENCES faculty (faculty_short_id);
+
+ALTER TABLE faculty_eval
+  ADD CONSTRAINT FK_student_TO_faculty_eval
+    FOREIGN KEY (id)
+    REFERENCES student (id);
+
+ALTER TABLE faculty_eval
+  ADD CONSTRAINT FK_semester_TO_faculty_eval
+    FOREIGN KEY (year, season)
+    REFERENCES semester (year, season);

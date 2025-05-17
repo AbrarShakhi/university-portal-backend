@@ -52,8 +52,10 @@ class Database {
       const result = await this.#pool.query(sql, params);
       return result;
     } catch (error) {
+      console.log(sql);
+      console.log(params);
       console.error("Query error", error.message);
-      throw error;
+      // throw error;
     }
   }
 }

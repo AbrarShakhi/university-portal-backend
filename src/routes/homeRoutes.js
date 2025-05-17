@@ -7,6 +7,7 @@ import ProfileController from "../controllers/home/profileController.js";
 import FacultyController from "../controllers/home/facultyController.js";
 import CourseController from "../controllers/home/courseController.js";
 import gradeController from "../controllers/home/gradeController.js";
+import OptionController from "../controllers/home/optionController.js";
 
 class StdAuthRoutes {
   #router = undefined;
@@ -114,6 +115,23 @@ class StdAuthRoutes {
       "/grade-report",
       AuthMiddleware.protect(),
       gradeController.report(),
+    );
+
+    this.#router.get(
+      "/current-semester",
+      AuthMiddleware.protect(),
+      OptionController.currentSemester(),
+    );
+
+    this.#router.get(
+      "/is-advising",
+      AuthMiddleware.protect(),
+      OptionController.isAdvising(),
+    );
+    this.#router.get(
+      "/is-fac-eval",
+      AuthMiddleware.protect(),
+      OptionController.isFacEval(),
     );
 
     // this.#router.get("/eval-faculty-list", AuthMiddleware.protect());
