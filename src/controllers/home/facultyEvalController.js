@@ -1,7 +1,7 @@
 import asyncHandler from "express-async-handler";
 
 import FacultyEval from "../../models/facultyEval.js";
-import Option from "../../models/options.js";
+import Options from "../../models/options.js";
 
 export default class FacultyEvalController {
   static list() {
@@ -12,12 +12,10 @@ export default class FacultyEvalController {
           .json({ message: "Not authorized, please login!" });
       }
       const { id } = req.std;
-      const { year, season } = await Option.getOptions();
+      const { year, season } = await Options.get();
       const faculty = await FacultyEval.list(id, year, season);
       if (!faculty) {
-        return res
-          .status(404)
-          .json({ message: "No faculty found!" });
+        return res.status(404).json({ message: "No faculty found!" });
       }
       res.status(200).json(faculty);
     });
@@ -33,7 +31,7 @@ export default class FacultyEvalController {
       const { id } = req.std;
       const { faculty_short_id } = req.params;
       const { rating } = req.body;
-      const { year, season } = await Option.getOptions();
+      const { year, season } = await Options.get();
       const facultyList = await FacultyEval.list(id, year, season);
       if (!facultyList.includes(faculty_short_id)) {
         return res
@@ -45,11 +43,15 @@ export default class FacultyEvalController {
           .status(400)
           .json({ message: "Rating must be between 0 and 10!" });
       }
-      const evalRes = await FacultyEval.evaluate(id, faculty_short_id, rating, year, season);
+      const evalRes = await FacultyEval.evaluate(
+        id,
+        faculty_short_id,
+        rating,
+        year,
+        season,
+      );
       if (!evalRes) {
-        return res
-          .status(404)
-          .json({ message: "No evaluation found!" });
+        return res.status(404).json({ message: "No evaluation found!" });
       }
       res.status(200).json({ message: "Evaluation submitted successfully" });
     });
