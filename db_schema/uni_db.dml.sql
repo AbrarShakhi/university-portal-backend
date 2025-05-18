@@ -15,6 +15,8 @@ DELETE FROM room CASCADE;
 DELETE FROM timeslot CASCADE;
 DELETE FROM semester CASCADE;
 DELETE FROM department CASCADE;
+DELETE FROM faculty_eval CASCADE;
+DELETE FROM uni_options CASCADE;
 
 -- DEPARTMENT
 INSERT INTO department (dept_short_name, long_name) VALUES
@@ -70,7 +72,8 @@ INSERT INTO semester (year, season, waver) VALUES
 ('2023', 'Spring', 0.0),
 ('2023', 'Summer', 0.0),
 ('2023', 'Fall', 0.0),
-('2024', 'Spring', 0.0);
+('2024', 'Spring', 0.0),
+('2025', 'Spring', 0.0);  -- Added current semester
 
 -- COURSE
 INSERT INTO course (course_id, title, cradit, dept_short_name, need_cradit, amount) VALUES
@@ -89,21 +92,49 @@ INSERT INTO section (section_no, course_id, room_no, capacity, day, start_time, 
 (1, 'CSE101', '101', 30, 'Mon', '09:00:00', '10:30:00', '2023', 'Spring'),
 (2, 'EEE201', '201', 25, 'Tue', '11:00:00', '12:30:00', '2023', 'Spring'),
 (1, 'PHY301', '301', 20, 'Wed', '14:00:00', '15:30:00', '2023', 'Fall'),
-(1, 'MAT401', '401', 35, 'Thu', '16:00:00', '17:30:00', '2024', 'Spring');
+(1, 'MAT401', '401', 35, 'Thu', '16:00:00', '17:30:00', '2024', 'Spring'),
+
+-- New sections for Spring 2025
+(1, 'CSE101', '101', 30, 'Mon', '09:00:00', '10:30:00', '2025', 'Spring'),
+(2, 'EEE201', '201', 25, 'Tue', '11:00:00', '12:30:00', '2025', 'Spring'),
+(1, 'PHY301', '301', 20, 'Wed', '14:00:00', '15:30:00', '2025', 'Spring'),
+(1, 'MAT401', '401', 35, 'Thu', '16:00:00', '17:30:00', '2025', 'Spring');
 
 -- TAKES
 INSERT INTO takes (id, grade, is_dropped, section_no, course_id, year, season) VALUES
 ('2022-1-60-206', 3.5, FALSE, 1, 'CSE101', '2023', 'Spring'),
 ('2022-3-60-111', 3.7, FALSE, 2, 'EEE201', '2023', 'Spring'),
 ('2022-3-60-243', 3.2, FALSE, 1, 'PHY301', '2023', 'Fall'),
-('2022-3-60-020', 4.0, FALSE, 1, 'MAT401', '2024', 'Spring');
+('2022-3-60-020', 4.0, FALSE, 1, 'MAT401', '2024', 'Spring'),
+
+-- All students taking courses in Spring 2025
+('2022-1-60-206', NULL, FALSE, 1, 'CSE101', '2025', 'Spring'),
+('2022-1-60-206', NULL, FALSE, 2, 'EEE201', '2025', 'Spring'),
+
+('2022-3-60-111', NULL, FALSE, 2, 'EEE201', '2025', 'Spring'),
+('2022-3-60-111', NULL, FALSE, 3, 'PHY301', '2025', 'Spring'),
+
+('2022-3-60-243', NULL, FALSE, 3, 'PHY301', '2025', 'Spring'),
+('2022-3-60-243', NULL, FALSE, 4, 'MAT401', '2025', 'Spring'),
+
+('2022-3-60-020', NULL, FALSE, 4, 'MAT401', '2025', 'Spring'),
+('2022-3-60-020', NULL, FALSE, 1, 'CSE101', '2025', 'Spring'),
+
+('2022-3-60-022', NULL, FALSE, 1, 'CSE101', '2025', 'Spring'),
+('2022-3-60-022', NULL, FALSE, 2, 'EEE201', '2025', 'Spring');
 
 -- TEACHES
 INSERT INTO teaches (faculty_short_id, section_no, course_id, year, season) VALUES
 ('JS_CSE', 1, 'CSE101', '2023', 'Spring'),
 ('SJ_EEE', 2, 'EEE201', '2023', 'Spring'),
 ('RW_PHY', 1, 'PHY301', '2023', 'Fall'),
-('EB_MAT', 1, 'MAT401', '2024', 'Spring');
+('EB_MAT', 1, 'MAT401', '2024', 'Spring'),
+
+-- Teach Spring 2025 sections
+('JS_CSE', 1, 'CSE101', '2025', 'Spring'),
+('SJ_EEE', 2, 'EEE201', '2025', 'Spring'),
+('RW_PHY', 1, 'PHY301', '2025', 'Spring'),
+('EB_MAT', 1, 'MAT401', '2025', 'Spring');
 
 -- STUDENT_LOGIN
 INSERT INTO student_login (id, password) VALUES
