@@ -117,17 +117,28 @@ class StdAuthRoutes {
       gradeController.report(),
     );
 
+    /**
+     * @TAKES: NOTHINGS
+     * #returns
+     */
     this.#router.get(
       "/current-semester",
       AuthMiddleware.protect(),
       OptionController.currentSemester(),
     );
-
+    /**
+     * @TAKES: NOTHINGS
+     * @returns: Boolean
+     */
     this.#router.get(
       "/is-advising",
       AuthMiddleware.protect(),
       OptionController.isAdvising(),
     );
+    /**
+     * @TAKES: NOTHINGS
+     * @returns: Boolean
+     */
     this.#router.get(
       "/is-fac-eval",
       AuthMiddleware.protect(),
