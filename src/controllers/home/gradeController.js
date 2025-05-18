@@ -15,9 +15,9 @@ export default class gradeController {
       const { id } = req.std;
       const reportRes = await GradeReport.report(id);
 
-      if (!reportRes || reportRes.length === 0) {
-        return res.status(404).json({
-          message: "No grade reports found for this student",
+      if (!reportRes) {
+        return res.status(501).json({
+          message: "Something wend wrong",
         });
       }
 
