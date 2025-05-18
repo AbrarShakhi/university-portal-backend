@@ -3,7 +3,7 @@ import database from "../db/database.js";
 export default class Options {
   static async get() {
     const sql = `
-        SELECT * FROM options
+        SELECT * FROM uni_options
     `;
     const result = await database.query(sql);
     if (result && result.rows.length > 0) {
