@@ -76,7 +76,7 @@ INSERT INTO semester (year, season, waver) VALUES
 ('2025', 'Spring', 0.0);  -- Added current semester
 
 -- COURSE
-INSERT INTO course (course_id, title, cradit, dept_short_name, need_cradit, amount) VALUES
+INSERT INTO course (course_id, title, credit, dept_short_name, need_credit, amount) VALUES
 ('CSE101', 'Introduction to Programming', 4.5, 'CSE', 0.0, 5000.00),
 ('EEE201', 'Circuit Theory', 4.0, 'EEE', 0.0, 6000.00),
 ('PHY301', 'Quantum Mechanics', 3.0, 'PHY', 0.0, 5500.00),

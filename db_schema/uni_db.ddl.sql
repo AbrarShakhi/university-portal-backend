@@ -20,9 +20,9 @@ CREATE TABLE course
 (
   course_id       char(6)        NOT NULL,
   title           varchar(256)   NOT NULL,
-  cradit          numeric(2, 1)  NOT NULL,
+  credit          numeric(2, 1)  NOT NULL,
   dept_short_name varchar(6)     NOT NULL,
-  need_cradit     numeric(4, 1) ,
+  need_credit     numeric(4, 1) ,
   amount          numeric(10, 4) NOT NULL,
   PRIMARY KEY (course_id)
 );

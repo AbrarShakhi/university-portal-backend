@@ -6,7 +6,7 @@ export default class StudentProfile {
       WITH earned_credits AS (
         SELECT 
           t.id,
-          SUM(c.cradit) as total_earned_credits
+          SUM(c.credit) as total_earned_credits
         FROM takes t
         JOIN course c ON t.course_id = c.course_id
         WHERE t.id = $1 

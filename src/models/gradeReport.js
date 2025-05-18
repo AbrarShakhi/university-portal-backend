@@ -5,7 +5,7 @@ export default class GradeReport {
     const sql = `
       SELECT 
         t.course_id,
-        c.cradit as course_credit,
+        c.credit as course_credit,
         t.grade,
         t.year,
         t.season as semester
