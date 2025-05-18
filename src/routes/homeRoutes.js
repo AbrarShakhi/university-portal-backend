@@ -8,6 +8,7 @@ import FacultyController from "../controllers/home/facultyController.js";
 import CourseController from "../controllers/home/courseController.js";
 import gradeController from "../controllers/home/gradeController.js";
 import OptionController from "../controllers/home/optionController.js";
+import FacultyEvalController from "../controllers/home/facultyEvalController.js";
 
 class StdAuthRoutes {
   #router = undefined;
@@ -145,7 +146,25 @@ class StdAuthRoutes {
       OptionController.isFacEval(),
     );
 
-    // this.#router.get("/eval-faculty-list", AuthMiddleware.protect());
+    /**
+     * @TAKES: NOTHING
+     * @returns: {array of objects}
+     */
+    this.#router.get(
+      "/eval-faculty-list",
+      AuthMiddleware.protect(),
+      FacultyEvalController.list(),
+    );
+    /**
+     * @TAKES: { faculty_short_id } = req.params;
+     * @TAKES: { rating } = req.body; (0 to 10 rating)
+     * @returns: {200}
+     */
+    this.#router.post(
+      "/eval-faculty/:faculty_short_id",
+      AuthMiddleware.protect(),
+      FacultyEvalController.evaluate(),
+    );
   }
 
   getRouter() {
