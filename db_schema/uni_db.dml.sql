@@ -155,3 +155,9 @@ INSERT INTO payment_history (id, paytime, amount) VALUES
 ('2022-3-60-111', NOW() - INTERVAL '15 days', 6000.00),
 ('2022-3-60-243', NOW() - INTERVAL '10 days', 5500.00),
 ('2022-3-60-020', NOW() - INTERVAL '5 days', 6500.00);
+
+-- UNI OPTIONS
+DELETE FROM uni_options;
+INSERT INTO uni_options (is_advising, is_fac_eval, year, season)
+VALUES (TRUE, TRUE, '2025', 'Spring');
+
