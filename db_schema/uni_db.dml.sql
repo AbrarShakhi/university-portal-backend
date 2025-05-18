@@ -45,7 +45,7 @@ INSERT INTO student (id, first_name, last_name, mobile_no, email, dept_short_nam
 ('2022-3-60-111', 'Tasfia Binte', 'Jahangir', '+8801722222222', '2022-3-60-111@std.ewubd.edu', 'EEE', FALSE, 'Chittagong, Bangladesh', 'Fatema Begum', '+8801987654321'),
 ('2022-3-60-243', 'Wasimul Bari', 'Rahat', '+8801733333333', '2022-3-60-243@std.ewubd.edu', 'PHY', FALSE, 'Khulna, Bangladesh', 'Abdul Bari', '+8801712345678'),
 ('2022-3-60-020', 'Fahim', 'Shahriar', '+8801744444444', '2022-3-60-020@std.ewubd.edu', 'MAT', FALSE, 'Sylhet, Bangladesh', 'Shahriar Ahmed', '+8801723456789'),
-('2022-3-60-022', 'Md. Shakhiul', 'Abrar', '+8801755555555', 'msasecondary@gmail.com', 'CSE', FALSE, 'Rajshahi, Bangladesh', 'Md. Abrar Hossain', '+8801734567890');
+('2022-3-60-022', 'Md. Shakhiul', 'Abrar', '+8801755555555', 'msa.acc@outlook.com', 'CSE', FALSE, 'Rajshahi, Bangladesh', 'Md. Abrar Hossain', '+8801734567890');
 
 -- 6. Insert advisors
 INSERT INTO advisor (id, faculty_short_id) VALUES

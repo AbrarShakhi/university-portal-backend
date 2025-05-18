@@ -12,10 +12,12 @@ export default class ClassScheduleController {
       }
       const { id } = req.std;
       const { semester_year, semester_season } = req.body;
-      if (!semester) {
-        return res.status(400).json({ message: "Semester is required!" });
+      if (!semester_year || !semester_season) {
+        return res
+          .status(400)
+          .json({ message: "Semester year and season are required!" });
       }
-      // Assuming you have a function to get the class schedule
+
       const schedule = await studentDashboard.getClassSchedule(
         id,
         semester_year,
