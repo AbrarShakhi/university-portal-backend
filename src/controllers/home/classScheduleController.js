@@ -11,7 +11,7 @@ export default class ClassScheduleController {
           .json({ message: "Not authorized, please login!" });
       }
       const { id } = req.std;
-      const { semester_year, semester_season } = req.body;
+      const { semester_year, semester_season } = req.query;
       if (!semester_year || !semester_season) {
         return res
           .status(400)

@@ -6,7 +6,7 @@ DELETE FROM capstone_superviser;
 DELETE FROM prereq;
 DELETE FROM section;
 DELETE FROM student_token;
-DELETE FROM student_login;
+-- DELETE FROM student_login;
 DELETE FROM payment_history;
 DELETE FROM faculty_eval;
 DELETE FROM student;
