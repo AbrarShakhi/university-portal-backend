@@ -12,6 +12,13 @@ class Database {
 
     this.#loadDbConfig();
 
+    for (const [key, value] of Object.entries(this.#config)) {
+      if (!value) {
+        console.log(`database authentication key=${key} is not properply set up. See README.`);
+        throw new Error("Unable to connect to database");
+      }
+    }
+
     try {
       this.#pool = new Pool(this.#config);
     } catch (error) {

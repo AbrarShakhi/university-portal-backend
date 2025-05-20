@@ -1,5 +1,7 @@
 # university-portal
 
+This is the backend for our CSE347 project, We had to use class diagram thats why we used unnessesary Classes and objects 
+
 ## Project setup
 
 ### Install `yarn` if not installed
@@ -64,13 +66,21 @@ put this variables in `.env` file
 ```env
 SERVER_PORT=8000
 
-JWT_SECRET=
+JWT_SECRET="SSSR"
 
 DB_USER=
 DB_HOST=
 DB_NAME=
 DB_PASSWORD=
-DB_PORT=
+DB_PORT=5432
+
+CLIENT_URL="http://localhost:3000"
+
+APP_EMAIL=
+EMAIL_PASS=
+
+# NODE_ENV="production"
+NODE_ENV="development"
 ```
 
 You need to fill these variables
@@ -78,8 +88,12 @@ You need to fill these variables
 - You can set anything to `JWT_SECRET`. But it is for password encryption. passwords will not match if you change it later.
 - `DB_USER`, `DB_HOST`, `DB_NAME`
   , `DB_PASSWORD`, `DB_PORT` they are for postgres database connection
+- also you need `APP_EMAIL` and `EMAIL_PASS` for sending emails with nodemailer.
 
 If they are filled up correctly. Now we are ready to start the server.
+
+#### import database
+In db_schema folder, there is `uni_db.ddl.sql` and `uni_db.dml.sql` you need to import that to the postgress database.
 
 #### Install node dependencies
 
