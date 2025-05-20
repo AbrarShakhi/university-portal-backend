@@ -38,7 +38,7 @@ class StdAuthRoutes {
     );
 
     this.#router.get(
-      "/",
+      "/std-home",
       AuthMiddleware.protect(),
       HomeController.homeStudent(),
     );
