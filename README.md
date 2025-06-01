@@ -46,7 +46,7 @@ git clone https://github.com/AbrarShakhi/university-portal-backend.git
 ```sh
 university-portal-backend
 ├── db_schema
-├── .env <- *YOU NEED TO THIS FILE*
+├── .env <- *YOU NEED THIS FILE*
 ├── .git
 ├── .gitignore
 ├── LICENSE
